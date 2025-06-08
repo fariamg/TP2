@@ -1,0 +1,64 @@
+#include "PackageState.h"
+#include "Warehouse.h"
+#include <string>
+
+// TODO: talvez usar o relogio seja melhor
+struct Date {
+  int day, month, year;
+};
+
+class Package {
+private:
+  // TODO: type vai ser de um tipo específic
+  //@ Atributos que guardam o remetente, destinatário e tipo do pacote
+  std::string sender, recipient, type;
+
+  //@ Atributos que guardam o armazém de origem e destino do pacote
+  Warehouse originWarehouse, destinationWarehouse;
+
+  //@ Atributo que guarda a data de postagem do pacote
+  Date postDate;
+
+  //@ Atributos que guardam o tempo que o pacote foi armazenado, o tempo em trânsito e o tempo esperado de armazenamento
+  int timeStored, timeInTransit, expectedStorageTime;
+
+  //@ Atributo que guarda o estado do pacote (começa como NOT_POSTED)
+  PackageState state;
+
+public:
+  //@ Construtor padrão
+  Package(){};
+
+  //@ Função que retorna o remetente do pacote
+  std::string getSender() const noexcept;
+
+  //@ Função que retorna o destinatário do pacote'
+  std::string getRecipient() const noexcept;
+
+  //@ Função que retorna o tipo do pacote
+  std::string getType() const noexcept;
+
+  //@ Função que retorna o armazém de origem do pacote
+  Warehouse getOriginWarehouse() const noexcept;
+
+  //@ Função que retorna o armazém de destino do pacote
+  Warehouse getDestinationWarehouse() const noexcept;
+
+  //@ Função que retorna a data de postagem do pacote
+  Date getPostDate()  const noexcept;
+
+  //@ Função que retorna o tempo armazenado do pacote
+  int getTimeStored() const noexcept;
+
+  //@ Função que retorna o tempo em trânsito do pacote
+  int getTimeInTransit() const noexcept;
+
+  //@ Função que retorna o tempo esperado de armazenamento do pacote
+  int getExpectedStorageTime() const noexcept;
+
+  //@ Função que seta o tempo que o pacote ficou em trânsito
+  void setTimeInTransit(int time);
+
+  //@ Função que seta o tempo de armazenamento do pacote
+  void setTimeStored(int time);
+};
