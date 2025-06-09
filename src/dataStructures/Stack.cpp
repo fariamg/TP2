@@ -7,7 +7,8 @@ Stack::~Stack() {
   while (top != nullptr) {
     Node* nodeToDelete = top;
     top = top->next;
-    delete nodeToDelete; //* Deleta o Node e não o Package, pois o Package é gerenciado externamente
+    
+    delete nodeToDelete; 
   }
 }
 
@@ -20,6 +21,7 @@ void Stack::push(const Package &package) {
   newNode->package = new Package(package);
   top->next = newNode;
   top = newNode;
+
   currentSize++;
 }
 
@@ -27,11 +29,15 @@ Package Stack::pop() {
   if (isEmpty()) {
     throw std::underflow_error("Stack is empty");
   }
+
   Node *temp = top;
   Package* poppedPackage = top->package;
   top = top->next;
+
   delete temp;
+
   currentSize--;
+
   return *poppedPackage;
 }
 
@@ -39,5 +45,6 @@ Package Stack::peek() const {
   if (isEmpty()) {
     throw std::underflow_error("Stack is empty");
   }
+
   return *top->package;
 }

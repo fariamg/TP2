@@ -2,7 +2,7 @@
 
 #include "Event.h"
 
-//@ Classe de implementação de um MinHeap para o escalonador
+//@ Classe de implementação de um MinHeap para o escalonador de eventos
 class MinHeap {
 private:
   //@ Array de Event ponteiros que representa o heap

@@ -1,12 +1,19 @@
 #pragma once
 
 #include "Package.h"
-#include "Node.h"
 
-
-// @ Classe que representa uma pilha de pacotes
+// @ Classe que representa uma pilha de pacotes armazenada no Warehouse
 class Stack {
 private:
+  //@ Struct de implemtação de um nó
+  struct Node {
+    //@ Ponteiro para o pacote armazenado no nó
+    Package *package;
+
+    //@ Ponteiro para o próximo nó na pilha
+    Node *next;
+  };
+  
   //@ Armazena o tamanho atual da pilha
   int currentSize;
 
