@@ -27,4 +27,12 @@ void Graph::addEdge(int i, int j) {
   this->adjacencyMatrix[j][i] = 1; //* Adiciona aresta de j para i
 }
 
-//TODO:LinkedList Graph::getNeighbors(int warehouseIndex) const{}
+LinkedList Graph::getNeighbors(int warehouseIndex) const{
+  for (int i = 0; i < numWarehouses; ++i) {
+    if (i < 0 || i >= numWarehouses) {
+      throw std::out_of_range("Índice fora do intervalo do grafo");
+    }
+  }
+
+  LinkedList neighbors;
+}

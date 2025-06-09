@@ -1,5 +1,7 @@
 #pragma once
 
+#include "LinkedList.h"
+
 //@ Classe que implementa o grafo para representar os armazéns e suas conexões
 class Graph {
 private:
@@ -21,5 +23,5 @@ public:
   void addEdge(int i, int j);
 
   //@Função que retorna os vizinhos de um armazém específico
-  //TODO:LinkedList getNeighbors(int warehouseIndex) const;
+  LinkedList getNeighbors(int warehouseIndex) const;
 };
