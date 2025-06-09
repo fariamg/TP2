@@ -1,33 +1,34 @@
 #include "../core/Package.h"
 
+//* O estado inicial sempre é NOT_POSTED, pois o pacote ainda não foi postado
 Package::Package()
     : timeStored(0), timeInTransit(0), expectedStorageTime(0),
       state(PackageState::NOT_POSTED) {}
 
-std::string Package::getSender() const noexcept { return sender; }
+std::string Package::getSender() const noexcept { return this->sender; }
 
-std::string Package::getRecipient() const noexcept { return recipient; }
+std::string Package::getRecipient() const noexcept { return this->recipient; }
 
-std::string Package::getType() const noexcept { return type; }
+std::string Package::getType() const noexcept { return this->type; }
 
 Warehouse Package::getOriginWarehouse() const noexcept {
-  return originWarehouse;
+  return this->originWarehouse;
 }
 
 Warehouse Package::getDestinationWarehouse() const noexcept {
-  return destinationWarehouse;
+  return this->destinationWarehouse;
 }
 
-Date Package::getPostDate() const noexcept { return postDate; }
+Date Package::getPostDate() const noexcept { return this->postDate; }
 
-int Package::getTimeStored() const noexcept { return timeStored; }
+int Package::getTimeStored() const noexcept { return this->timeStored; }
 
-int Package::getTimeInTransit() const noexcept { return timeInTransit; }
+int Package::getTimeInTransit() const noexcept { return this->timeInTransit; }
 
 int Package::getExpectedStorageTime() const noexcept {
-  return expectedStorageTime;
+  return this->expectedStorageTime;
 }
 
-void Package::setTimeInTransit(int time) { timeInTransit = time; }
+void Package::setTimeInTransit(int time) { this->timeInTransit = time; }
 
-void Package::setTimeStored(int time) { timeStored = time; }
+void Package::setTimeStored(int time) { this->timeStored = time; }

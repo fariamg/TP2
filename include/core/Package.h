@@ -1,3 +1,5 @@
+#pragma once
+
 #include "PackageState.h"
 #include "Warehouse.h"
 #include <string>
@@ -7,6 +9,7 @@ struct Date {
   int day, month, year;
 };
 
+//@ Classe que representa um pacote
 class Package {
 private:
   // TODO: type vai ser de um tipo específic
@@ -19,7 +22,8 @@ private:
   //@ Atributo que guarda a data de postagem do pacote
   Date postDate;
 
-  //@ Atributos que guardam o tempo que o pacote foi armazenado, o tempo em trânsito e o tempo esperado de armazenamento
+  //@ Atributos que guardam o tempo que o pacote foi armazenado, o tempo em
+  //@ trânsito e o tempo esperado de armazenamento
   int timeStored, timeInTransit, expectedStorageTime;
 
   //@ Atributo que guarda o estado do pacote (começa como NOT_POSTED)
@@ -45,7 +49,7 @@ public:
   Warehouse getDestinationWarehouse() const noexcept;
 
   //@ Função que retorna a data de postagem do pacote
-  Date getPostDate()  const noexcept;
+  Date getPostDate() const noexcept;
 
   //@ Função que retorna o tempo armazenado do pacote
   int getTimeStored() const noexcept;
