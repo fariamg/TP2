@@ -21,6 +21,7 @@ private:
   Node *top;
 
 public:
+//TODO: ADICIONAR CAPACIDADE MAXIMA DE ARMAZENAMENTO NO CONSTRUTOR DA PILHA (PONTO EXTRA)
   //@ Construtor e destrutor
   Stack();
   ~Stack();
@@ -38,6 +39,7 @@ public:
   // bool isFull() const noexcept;
 
   //@ Função que adiciona um pacote à pilha
+  //@ @param package Ponteiro para o pacote a ser adicionado
   void push(const Package *package);
 
   //@ Função que remove e retorna o pacote do topo da pilha

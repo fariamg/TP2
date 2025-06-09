@@ -1,15 +1,16 @@
-#include "../core/Package.h"
+#include "../include/domains/Package.h"
 
 //* O estado inicial sempre é NOT_POSTED, pois o pacote ainda não foi postado
-Package::Package(int id)
-    : timeStored(0), timeInTransit(0), expectedStorageTime(0), id (id),
+Package::Package(int ID)
+    : timeStored(0), timeInTransit(0), expectedStorageTime(0), ID(ID),
       state(PackageState::NOT_POSTED) {}
 
-int Package::getId() const noexcept { return this->id; }
+int Package::getId() const noexcept { return this->ID; }
 
-//std::string Package::getSender() const noexcept { return this->sender; }
+// std::string Package::getSender() const noexcept { return this->sender; }
 
-//std::string Package::getRecipient() const noexcept { return this->recipient; }
+// std::string Package::getRecipient() const noexcept { return this->recipient;
+// }
 
 Warehouse Package::getOriginWarehouse() const noexcept {
   return this->originWarehouse;

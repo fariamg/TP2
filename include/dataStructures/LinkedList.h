@@ -38,6 +38,7 @@ public:
   int peekFront() const;
 
   //@ Função que adiciona um nó com o índice do armazém ao final da lista
+  //@ @param warehouseIndex Índice do armazém a ser adicionado
   void addWarehouse(int& warehouseIndex);
 
   //@ Função que retorna um booleano indicando se a lista está vazia

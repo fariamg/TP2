@@ -13,23 +13,29 @@ private:
   int currentSize;
 
   //@ Funções auxiliares para manter a propriedade do heap
+  //@ @param index Índice do nó a ser ajustado
   void heapifyUp(int index);
   void heapifyDown(int index);
 
   //@ Funções auxiliares para acessar os índices dos nós pai e filhos
+  //@ @param index Índice do nó
   int parent(int index) const noexcept;
   int leftChild(int index) const noexcept;
   int rightChild(int index) const noexcept;
 
   //@ Função auxiliar para trocar dois eventos no heap
+  //@ @param a Primeiro evento a ser trocado
+  //@ @param b Segundo evento a ser trocado
   void swap(Event *&a, Event *&b) {};
 
 public:
   //@ Construtor e destrutor
+  //@ @param capacity Capacidade máxima do heap
   MinHeap(int capacity);
   ~MinHeap();
 
   //@ Função de inserção de eventos no heap
+  //@ @param event Ponteiro para o evento a ser inserido
   void insert(Event *event);
 
   //@Função de extração do menor evento do heap

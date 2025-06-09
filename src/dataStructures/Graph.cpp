@@ -23,8 +23,8 @@ void Graph::addEdge(int i, int j, int capacity) {
     throw std::out_of_range("Índices fora do intervalo do grafo");
   }
 
-  this->adjacencyMatrix[i][j] = capacity; //* Adiciona aresta de i para j
-  this->adjacencyMatrix[j][i] = capacity; //* Adiciona aresta de j para i
+  this->adjacencyMatrix[i][j] = capacity; 
+  this->adjacencyMatrix[j][i] = capacity;
 }
 
 LinkedList Graph::getNeighbors(int warehouseIndex) const{

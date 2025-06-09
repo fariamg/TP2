@@ -10,7 +10,7 @@ class Package {
 private:
   // TODO: type vai ser de um tipo específic
   //@ Atributo que guarda o ID único do pacote
-  int id;
+  int ID;
 
   //@ Atributos que guardam o remetente, destinatário e tipo do pacote
   //std::string sender, recipient;
@@ -33,7 +33,7 @@ private:
 
 public:
   //@ Construtor padrão
-  Package(int id){};
+  Package(int ID);
 
   //@ Função que retorna o ID do pacote
   int getId() const noexcept;
