@@ -1,19 +1,24 @@
-#include "Package.h"
+#pragma once
 
+#include "Package.h"
+struct Node {
+  //@ Ponteiro para o pacote armazenado no nó
+  Package *package;
+
+  //@ Ponteiro para o próximo nó na pilha
+  Node *next;
+};
 class Stack {
 private:
-  //@ Artributos que guardam a capacidade, tamanho atual
-  int capacity, currentSize;
-
-  //@ Ponteiro para o array de pacotes
-  Package *packages;
+  //@ Armazena o tamanho atual da pilha
+  int currentSize;
 
   //@ Ponteiro para o topo da pilha
-  Package *top;
+  Node *top;
 
 public:
   //@ Construtor e destrutor
-  Stack(int capacity);
+  Stack();
   ~Stack();
 
   //@ Função que retorna a capacidade da pilha
@@ -26,7 +31,7 @@ public:
   bool isEmpty() const noexcept;
 
   //@ Função que verifica se a pilha está cheia
-  bool isFull() const noexcept;
+  // bool isFull() const noexcept;
 
   //@ Função que adiciona um pacote à pilha
   void push(const Package &package);
@@ -36,7 +41,4 @@ public:
 
   //@ Função que retorna o pacote do topo da pilha sem removê-lo
   Package peek() const;
-
-  //@ Função que limpa a pilha, removendo todos os pacotes
-  void clear();
 };
