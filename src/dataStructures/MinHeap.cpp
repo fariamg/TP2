@@ -9,7 +9,7 @@ MinHeap::MinHeap(int capacity) : capacity(capacity), currentSize(0) {
 //! (responsabilidade unica)
 MinHeap::~MinHeap() { delete[] heapArray; }
 
-//TODO: SOBRECARREGAR OPERATOR NA CLASSE EVENT PARA COMPARAÇÃO
+// TODO: SOBRECARREGAR OPERATOR NA CLASSE EVENT PARA COMPARAÇÃO
 void MinHeap::heapifyUp(int index) {
   while (index > 0 && *heapArray[index] < *heapArray[parent(index)]) {
     swap(heapArray[index], heapArray[parent(index)]);
@@ -69,7 +69,7 @@ void MinHeap::insert(Event *event) {
 
 Event *MinHeap::extractMin() {
   if (isEmpty()) {
-    throw std::underflow_error("Heap is empty");
+    throw std::out_of_range("Heap is empty");
   }
 
   if (currentSize == 1) {
@@ -88,7 +88,7 @@ Event *MinHeap::extractMin() {
 
 Event *MinHeap::peekMin() const {
   if (isEmpty()) {
-    throw std::underflow_error("Heap is empty");
+    throw std::out_of_range("Heap is empty");
   }
 
   return heapArray[0];

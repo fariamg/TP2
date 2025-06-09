@@ -18,13 +18,13 @@ Graph::~Graph() {
 
 int Graph::getNumWarehouses() const noexcept { return this->numWarehouses; }
 
-void Graph::addEdge(int i, int j) {
+void Graph::addEdge(int i, int j, int capacity) {
   if (i < 0 || i >= numWarehouses || j < 0 || j >= numWarehouses) {
     throw std::out_of_range("Índices fora do intervalo do grafo");
   }
 
-  this->adjacencyMatrix[i][j] = 1; //* Adiciona aresta de i para j
-  this->adjacencyMatrix[j][i] = 1; //* Adiciona aresta de j para i
+  this->adjacencyMatrix[i][j] = capacity; //* Adiciona aresta de i para j
+  this->adjacencyMatrix[j][i] = capacity; //* Adiciona aresta de j para i
 }
 
 LinkedList Graph::getNeighbors(int warehouseIndex) const{

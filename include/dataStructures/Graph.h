@@ -20,7 +20,8 @@ public:
   int getNumWarehouses() const noexcept;
 
   //@ Função para adicionar uma aresta entre dois armazéns
-  void addEdge(int i, int j);
+  //TODO: ADICIONAR UM PAIR JUNTO COM CAPCIDADE PARA REPRESENTAR O TEMPO ENTRE DOIS ARMAZENS SENDO VARIVEL A CADA CONEXÃO (PONTO EXTRA)
+  void addEdge(int i, int j, int capacity);
 
   //@Função que retorna os vizinhos de um armazém específico
   LinkedList getNeighbors(int warehouseIndex) const;
