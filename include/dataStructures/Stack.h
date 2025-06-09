@@ -1,13 +1,10 @@
 #pragma once
 
 #include "Package.h"
-struct Node {
-  //@ Ponteiro para o pacote armazenado no nó
-  Package *package;
+#include "Node.h"
 
-  //@ Ponteiro para o próximo nó na pilha
-  Node *next;
-};
+
+// @ Classe que representa uma pilha de pacotes
 class Stack {
 private:
   //@ Armazena o tamanho atual da pilha
