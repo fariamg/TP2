@@ -2,4 +2,4 @@
 enum EventType {
     PACKAGE_ARRIVAL,
     TRANSPORT
-}
+};
