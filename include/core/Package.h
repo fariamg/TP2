@@ -4,23 +4,18 @@
 #include "Warehouse.h"
 #include <string>
 
-// TODO: talvez usar o relogio seja melhor
-struct Date {
-  int day, month, year;
-};
-
 //@ Classe que representa um pacote
 class Package {
 private:
   // TODO: type vai ser de um tipo específic
   //@ Atributos que guardam o remetente, destinatário e tipo do pacote
-  std::string sender, recipient, type;
+  std::string sender, recipient;
 
   //@ Atributos que guardam o armazém de origem e destino do pacote
   Warehouse originWarehouse, destinationWarehouse;
 
   //@ Atributo que guarda a data de postagem do pacote
-  Date postDate;
+  int postDate;
 
   //@ Atributos que guardam o tempo que o pacote foi armazenado, o tempo em
   //@ trânsito e o tempo esperado de armazenamento
@@ -49,7 +44,7 @@ public:
   Warehouse getDestinationWarehouse() const noexcept;
 
   //@ Função que retorna a data de postagem do pacote
-  Date getPostDate() const noexcept;
+  int getPostDate() const noexcept;
 
   //@ Função que retorna o tempo armazenado do pacote
   int getTimeStored() const noexcept;

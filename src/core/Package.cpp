@@ -9,8 +9,6 @@ std::string Package::getSender() const noexcept { return this->sender; }
 
 std::string Package::getRecipient() const noexcept { return this->recipient; }
 
-std::string Package::getType() const noexcept { return this->type; }
-
 Warehouse Package::getOriginWarehouse() const noexcept {
   return this->originWarehouse;
 }
@@ -19,7 +17,7 @@ Warehouse Package::getDestinationWarehouse() const noexcept {
   return this->destinationWarehouse;
 }
 
-Date Package::getPostDate() const noexcept { return this->postDate; }
+int Package::getPostDate() const noexcept { return this->postDate; }
 
 int Package::getTimeStored() const noexcept { return this->timeStored; }
 
