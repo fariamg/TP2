@@ -16,7 +16,7 @@ private:
   // std::string sender, recipient;
 
   //@ Atributos que guardam o armazém de origem e destino do pacote
-  Warehouse originWarehouse, destinationWarehouse;
+  int initialOrigin, finalDestination;
 
   //@ Atributo que guarda a data de postagem do pacote
   int postDate;
@@ -33,7 +33,9 @@ private:
 
 public:
   //@ Construtor padrão
-  Package(int ID);
+  //@ @param ID ID único do pacote
+  Package(int ID, int initialOrigin, int finalDestination, int postDate,
+          int expectedStorageTime);
 
   //@ Função que retorna o ID do pacote
   int getId() const noexcept;
@@ -48,10 +50,10 @@ public:
   std::string getType() const noexcept;
 
   //@ Função que retorna o armazém de origem do pacote
-  Warehouse getOriginWarehouse() const noexcept;
+  Warehouse getInitialOrigin() const noexcept;
 
   //@ Função que retorna o armazém de destino do pacote
-  Warehouse getDestinationWarehouse() const noexcept;
+  Warehouse getFinalDestination() const noexcept;
 
   //@ Função que retorna a data de postagem do pacote
   int getPostDate() const noexcept;
@@ -72,8 +74,10 @@ public:
   LinkedList getRoute() const noexcept;
 
   //@ Função que seta o tempo que o pacote ficou em trânsito
+  //@ @param time Tempo que o pacote ficou em trânsito
   void setTimeInTransit(int time);
 
   //@ Função que seta o tempo de armazenamento do pacote
+  //@ @param time Tempo que o pacote ficou armazenado
   void setTimeStored(int time);
 };
