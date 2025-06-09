@@ -7,9 +7,9 @@ Package::Package(int id)
 
 int Package::getId() const noexcept { return this->id; }
 
-std::string Package::getSender() const noexcept { return this->sender; }
+//std::string Package::getSender() const noexcept { return this->sender; }
 
-std::string Package::getRecipient() const noexcept { return this->recipient; }
+//std::string Package::getRecipient() const noexcept { return this->recipient; }
 
 Warehouse Package::getOriginWarehouse() const noexcept {
   return this->originWarehouse;

@@ -2,6 +2,7 @@
 
 #include "PackageState.h"
 #include "Warehouse.h"
+#include "LinkedList.h"
 #include <string>
 
 //@ Classe que representa um pacote
@@ -12,7 +13,7 @@ private:
   int id;
 
   //@ Atributos que guardam o remetente, destinatário e tipo do pacote
-  std::string sender, recipient;
+  //std::string sender, recipient;
 
   //@ Atributos que guardam o armazém de origem e destino do pacote
   Warehouse originWarehouse, destinationWarehouse;
@@ -27,6 +28,9 @@ private:
   //@ Atributo que guarda o estado do pacote (começa como NOT_POSTED)
   PackageState state;
 
+  //@ Atributo que guarda a rota ótima entre armazéns para o pacote
+  LinkedList route;
+
 public:
   //@ Construtor padrão
   Package(int id){};
@@ -35,10 +39,10 @@ public:
   int getId() const noexcept;
 
   //@ Função que retorna o remetente do pacote
-  std::string getSender() const noexcept;
+  //std::string getSender() const noexcept;
 
   //@ Função que retorna o destinatário do pacote'
-  std::string getRecipient() const noexcept;
+  //std::string getRecipient() const noexcept;
 
   //@ Função que retorna o tipo do pacote
   std::string getType() const noexcept;
@@ -63,6 +67,9 @@ public:
 
   //@ Função que retorna o estado do pacote
   PackageState getState() const noexcept;
+
+  //@ Função que retorna a rota ótima entre armazéns para o pacote
+  LinkedList getRoute() const noexcept;
 
   //@ Função que seta o tempo que o pacote ficou em trânsito
   void setTimeInTransit(int time);
