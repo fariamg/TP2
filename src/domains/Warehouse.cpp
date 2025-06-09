@@ -1,12 +1,7 @@
 #include "Warehouse.h"
 
-Warehouse::Warehouse(int ID) : ID(ID) {
-}
+Warehouse::Warehouse(int ID) : ID(ID) {}
 
-int Warehouse::getId() const noexcept {
-    return this->ID;
-}
+int Warehouse::getId() const noexcept { return this->ID; }
 
-Stack Warehouse::getPackages() const noexcept {
-    return this->packages;
-}
+Stack Warehouse::getPackages() const noexcept { return this->packages; }
