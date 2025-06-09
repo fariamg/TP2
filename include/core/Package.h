@@ -8,6 +8,9 @@
 class Package {
 private:
   // TODO: type vai ser de um tipo específic
+  //@ Atributo que guarda o ID único do pacote
+  int id;
+
   //@ Atributos que guardam o remetente, destinatário e tipo do pacote
   std::string sender, recipient;
 
@@ -26,7 +29,10 @@ private:
 
 public:
   //@ Construtor padrão
-  Package(){};
+  Package(int id){};
+
+  //@ Função que retorna o ID do pacote
+  int getId() const noexcept;
 
   //@ Função que retorna o remetente do pacote
   std::string getSender() const noexcept;
@@ -54,6 +60,9 @@ public:
 
   //@ Função que retorna o tempo esperado de armazenamento do pacote
   int getExpectedStorageTime() const noexcept;
+
+  //@ Função que retorna o estado do pacote
+  PackageState getState() const noexcept;
 
   //@ Função que seta o tempo que o pacote ficou em trânsito
   void setTimeInTransit(int time);
