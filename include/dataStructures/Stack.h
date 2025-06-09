@@ -8,7 +8,7 @@ private:
   //@ Struct de implemtação de um nó
   struct Node {
     //@ Ponteiro para o pacote armazenado no nó
-    Package *package;
+    const Package *package;
 
     //@ Ponteiro para o próximo nó na pilha
     Node *next;
@@ -38,11 +38,11 @@ public:
   // bool isFull() const noexcept;
 
   //@ Função que adiciona um pacote à pilha
-  void push(const Package &package);
+  void push(const Package *package);
 
   //@ Função que remove e retorna o pacote do topo da pilha
-  Package pop();
+  const Package pop();
 
   //@ Função que retorna o pacote do topo da pilha sem removê-lo
-  Package peek() const;
+  const Package peek() const;
 };

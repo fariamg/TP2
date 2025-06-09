@@ -5,10 +5,10 @@ Stack::Stack() : currentSize(0), top(nullptr) {}
 
 Stack::~Stack() {
   while (top != nullptr) {
-    Node* nodeToDelete = top;
+    Node *nodeToDelete = top;
     top = top->next;
-    
-    delete nodeToDelete; 
+
+    delete nodeToDelete;
   }
 }
 
@@ -16,22 +16,23 @@ int Stack::getCurrentSize() const noexcept { return this->currentSize; }
 
 bool Stack::isEmpty() const noexcept { return this->top == nullptr; }
 
-void Stack::push(const Package &package) {
+
+void Stack::push(const Package *package) {
   Node *newNode = new Node;
-  newNode->package = new Package(package);
-  top->next = newNode;
+  newNode->package = package;
+  top->next = top;
   top = newNode;
 
   currentSize++;
 }
 
-Package Stack::pop() {
+const Package Stack::pop() {
   if (isEmpty()) {
-    throw std::underflow_error("Stack is empty");
+    throw std::out_of_range("Stack is empty");
   }
 
   Node *temp = top;
-  Package* poppedPackage = top->package;
+  const Package *poppedPackage = top->package;
   top = top->next;
 
   delete temp;
@@ -41,9 +42,9 @@ Package Stack::pop() {
   return *poppedPackage;
 }
 
-Package Stack::peek() const {
+const Package Stack::peek() const {
   if (isEmpty()) {
-    throw std::underflow_error("Stack is empty");
+    throw std::out_of_range("Stack is empty");
   }
 
   return *top->package;
