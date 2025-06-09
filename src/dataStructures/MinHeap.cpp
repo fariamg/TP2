@@ -1,4 +1,4 @@
-#include "../dataStructures/MinHeap.h"
+#include "../include/dataStructures/MinHeap.h"
 #include <stdexcept>
 
 MinHeap::MinHeap(int capacity) : capacity(capacity), currentSize(0) {

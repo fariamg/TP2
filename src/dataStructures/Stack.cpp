@@ -1,4 +1,4 @@
-#include "../dataStructures/Stack.h"
+#include "../include/dataStructures/Stack.h"
 #include <stdexcept>
 
 Stack::Stack() : currentSize(0), top(nullptr) {}
