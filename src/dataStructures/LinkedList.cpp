@@ -30,17 +30,17 @@ void LinkedList::removeFront() {
   }
 }
 
-Warehouse LinkedList::peekFront() const {
+int LinkedList::peekFront() const {
   if (isEmpty()) {
     throw std::out_of_range("A lista está vazia");
   }
 
-  return head->warehouse;
+  return head->warehouseIndex;
 }
 
-void LinkedList::addWarehouse(Warehouse* warehouse) {
+void LinkedList::addWarehouse(int& warehouseIndex)  {
     Node *newNode = new Node;
-    newNode->warehouse = *warehouse;
+    newNode->warehouseIndex = warehouseIndex;
     newNode->next = nullptr;
     
     if (isEmpty()) {

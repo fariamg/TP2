@@ -9,7 +9,10 @@ private:
   //@ Struct que define um nó da lista ligada, com seu respectivo
   //@ armazém e ponteiro para o próximo nó
   struct Node {
-    Warehouse warehouse;
+    //@ Indice do armazém armazenado no nó
+    int warehouseIndex;
+
+    //@ Ponteiro para o próximo nó na lista
     Node *next;
   };
 
@@ -31,11 +34,11 @@ public:
   //@ Função que remove o primeiro armazém da lista
   void removeFront();
 
-  //@ Função que retorna o primeiro armazem sem removê-lo
-  Warehouse peekFront() const;
+  //@ Função que retorna o ID do primeiro armazem sem removê-lo
+  int peekFront() const;
 
   //@ Função que adiciona um nó com o índice do armazém ao final da lista
-  void addWarehouse(Warehouse* warehouse);
+  void addWarehouse(int& warehouseIndex);
 
   //@ Função que retorna um booleano indicando se a lista está vazia
   bool isEmpty() const noexcept;
