@@ -3,6 +3,7 @@
 #include "EventType.h"
 #include "Package.h"
 
+//@ Classe que implementa um evento da simulação
 class Event {
 public:
   //@ Atributo que define o tipo de evento
