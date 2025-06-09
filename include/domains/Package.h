@@ -1,8 +1,8 @@
 #pragma once
 
+#include "LinkedList.h"
 #include "PackageState.h"
 #include "Warehouse.h"
-#include "LinkedList.h"
 #include <string>
 
 //@ Classe que representa um pacote
@@ -13,7 +13,7 @@ private:
   int ID;
 
   //@ Atributos que guardam o remetente, destinatário e tipo do pacote
-  //std::string sender, recipient;
+  // std::string sender, recipient;
 
   //@ Atributos que guardam o armazém de origem e destino do pacote
   Warehouse originWarehouse, destinationWarehouse;
@@ -39,10 +39,10 @@ public:
   int getId() const noexcept;
 
   //@ Função que retorna o remetente do pacote
-  //std::string getSender() const noexcept;
+  // std::string getSender() const noexcept;
 
   //@ Função que retorna o destinatário do pacote'
-  //std::string getRecipient() const noexcept;
+  // std::string getRecipient() const noexcept;
 
   //@ Função que retorna o tipo do pacote
   std::string getType() const noexcept;
