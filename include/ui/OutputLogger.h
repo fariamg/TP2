@@ -1,15 +1,12 @@
 #pragma once
 
-#include <string>
-
-
 class OutputLogger {
 public:
-  OutputLogger() = default;
-  virtual ~OutputLogger() = default;
-
-  virtual void log(const std::string &message) = 0;
-  virtual void logError(const std::string &message) = 0;
-  virtual void logWarning(const std::string &message) = 0;
-  virtual void logInfo(const std::string &message) = 0;
+  void logPackageStored(int time, int pkgId, int whId, int sectionId);
+  void logPackageInTransit(int time, int pkgId, int originId, int destId);
+  void logPackageDelivered(int time, int pkgId, int whId);
+  void logPackageRemoved(int time, int pkgId, int whId, int sectionId);
+  
+  private:
+  void printFormattedTime(int time);
 };
