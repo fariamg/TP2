@@ -26,7 +26,7 @@ void Stack::push(const Package *package) {
   currentSize++;
 }
 
-const Package Stack::pop() {
+const Package* Stack::pop() {
   if (isEmpty()) {
     throw std::out_of_range("Stack is empty");
   }
@@ -39,13 +39,13 @@ const Package Stack::pop() {
 
   currentSize--;
 
-  return *poppedPackage;
+  return poppedPackage;
 }
 
-const Package Stack::peek() const {
+const Package* Stack::peek() const {
   if (isEmpty()) {
     throw std::out_of_range("Stack is empty");
   }
 
-  return *top->package;
+  return top->package;
 }

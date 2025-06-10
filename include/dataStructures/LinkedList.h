@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdexcept> // Para usar std::out_of_range em caso de erro
+#include <stdexcept> 
 
 //@ Classe que implementa uma lista ligada genérica, para rota ótima e lista de
 //@ pilhas

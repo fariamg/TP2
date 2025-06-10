@@ -43,8 +43,8 @@ public:
   void push(const Package *package);
 
   //@ Função que remove e retorna o pacote do topo da pilha
-  const Package pop();
+  const Package* pop();
 
   //@ Função que retorna o pacote do topo da pilha sem removê-lo
-  const Package peek() const;
+  const Package* peek() const;
 };

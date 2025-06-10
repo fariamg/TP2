@@ -29,7 +29,7 @@ private:
   PackageState state;
 
   //@ Atributo que guarda a rota ótima entre armazéns para o pacote
-  LinkedList route;
+  LinkedList<Warehouse> route;
 
 public:
   //@ Construtor padrão
@@ -71,7 +71,7 @@ public:
   PackageState getState() const noexcept;
 
   //@ Função que retorna a rota ótima entre armazéns para o pacote
-  LinkedList getRoute() const noexcept;
+  LinkedList<Warehouse> getRoute() const noexcept;
 
   //@ Função que seta o tempo que o pacote ficou em trânsito
   //@ @param time Tempo que o pacote ficou em trânsito
