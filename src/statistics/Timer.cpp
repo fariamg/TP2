@@ -1,5 +1,5 @@
+#include "Timer.h"
 #include <stdexcept>
-#include "../../include/measurement/Timer.h"
 
 Timer::Timer() : time(0) {}
 
