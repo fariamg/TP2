@@ -1,13 +1,11 @@
-#include "Package.h"
+#include "../include/domains/Package.h"
+
 //* O estado inicial sempre é NOT_POSTED, pois o pacote ainda não foi postado
-Package::Package(int ID, int initialOrigin, int finalDestination, int postDate,
-                 int expectedStorageTime, int totalWarehouses)
+Package::Package(int ID, int initialOrigin, int finalDestination,
+                        int postDate, int expectedStorageTime)
     : ID(ID), initialOrigin(initialOrigin), finalDestination(finalDestination),
       postDate(postDate), timeStored(0), timeInTransit(0),
-      expectedStorageTime(expectedStorageTime),
-      state(PackageState::NOT_POSTED) {
-  this->route = new Warehouse[totalWarehouses];
-}
+      expectedStorageTime(expectedStorageTime), state(PackageState::NOT_POSTED) {}
 
 int Package::getId() const noexcept { return this->ID; }
 
@@ -16,11 +14,11 @@ int Package::getId() const noexcept { return this->ID; }
 // std::string Package::getRecipient() const noexcept { return this->recipient;
 // }
 
-int Package::getInitialOrigin() const noexcept {
+Warehouse Package::getInitialOrigin() const noexcept {
   return this->initialOrigin;
 }
 
-int Package::getFinalDestination() const noexcept {
+Warehouse Package::getFinalDestination() const noexcept {
   return this->finalDestination;
 }
 
@@ -35,14 +33,6 @@ int Package::getExpectedStorageTime() const noexcept {
 }
 
 PackageState Package::getState() const noexcept { return this->state; }
-
-int* Package::getRoute() const noexcept {
-  int* routeIds = new int[sizeof(this->route) / sizeof(Warehouse)];
-  for (size_t i = 0; i < sizeof(this->route) / sizeof(Warehouse); ++i) {
-    routeIds[i] = this->route[i].getId();
-  }
-  return routeIds;
-}
 
 void Package::setTimeInTransit(int time) { this->timeInTransit = time; }
 

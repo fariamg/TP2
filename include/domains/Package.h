@@ -1,5 +1,6 @@
 #pragma once
 
+#include "LinkedList.h"
 #include "PackageState.h"
 #include "Warehouse.h"
 #include <string>
@@ -28,13 +29,13 @@ private:
   PackageState state;
 
   //@ Atributo que guarda a rota ótima entre armazéns para o pacote
-  Warehouse* route;
+  LinkedList<Warehouse> route;
 
 public:
   //@ Construtor padrão
   //@ @param ID ID único do pacote
   Package(int ID, int initialOrigin, int finalDestination, int postDate,
-          int expectedStorageTime, int totalWarehouses);
+          int expectedStorageTime);
 
   //@ Função que retorna o ID do pacote
   int getId() const noexcept;
@@ -49,10 +50,10 @@ public:
   std::string getType() const noexcept;
 
   //@ Função que retorna o armazém de origem do pacote
-  int getInitialOrigin() const noexcept;
+  Warehouse getInitialOrigin() const noexcept;
 
   //@ Função que retorna o armazém de destino do pacote
-  int getFinalDestination() const noexcept;
+  Warehouse getFinalDestination() const noexcept;
 
   //@ Função que retorna a data de postagem do pacote
   int getPostDate() const noexcept;
@@ -70,7 +71,7 @@ public:
   PackageState getState() const noexcept;
 
   //@ Função que retorna a rota ótima entre armazéns para o pacote
-  int* getRoute() const noexcept;
+  LinkedList<Warehouse> getRoute() const noexcept;
 
   //@ Função que seta o tempo que o pacote ficou em trânsito
   //@ @param time Tempo que o pacote ficou em trânsito
