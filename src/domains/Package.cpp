@@ -5,7 +5,6 @@ Package::Package(int ID, int initialOrigin, int finalDestination, int postDate,
                  int expectedStorageTime)
     : ID(ID), initialOrigin(initialOrigin), finalDestination(finalDestination),
       postDate(postDate), timeStored(0), timeInTransit(0),
-      expectedStorageTime(expectedStorageTime),
       state(PackageState::NOT_POSTED) {}
 
 int Package::getId() const noexcept { return this->ID; }
@@ -29,9 +28,6 @@ int Package::getTimeStored() const noexcept { return this->timeStored; }
 
 int Package::getTimeInTransit() const noexcept { return this->timeInTransit; }
 
-int Package::getExpectedStorageTime() const noexcept {
-  return this->expectedStorageTime;
-}
 
 PackageState Package::getState() const noexcept { return this->state; }
 

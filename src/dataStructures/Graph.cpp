@@ -41,7 +41,6 @@ LinkedList<int> Graph::getNeighbors(int warehouseIndex) const {
       Warehouse neighbor(j, numWarehouses);
       neighbors.addBack(neighbor.getId());
     }
-
-    return neighbors;
   }
+  return neighbors;
 }

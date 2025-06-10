@@ -23,7 +23,7 @@ private:
 
   //@ Atributos que guardam o tempo que o pacote foi armazenado, o tempo em
   //@ trânsito e o tempo esperado de armazenamento
-  int timeStored, timeInTransit, expectedStorageTime;
+  int timeStored, timeInTransit;
 
   //@ Atributo que guarda o estado do pacote (começa como NOT_POSTED)
   PackageState state;
@@ -63,9 +63,6 @@ public:
 
   //@ Função que retorna o tempo em trânsito do pacote
   int getTimeInTransit() const noexcept;
-
-  //@ Função que retorna o tempo esperado de armazenamento do pacote
-  int getExpectedStorageTime() const noexcept;
 
   //@ Função que retorna o estado do pacote
   PackageState getState() const noexcept;
