@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LinkedList.h"
+#include "Warehouse.h"
 
 //@ Classe que implementa o grafo para representar os armazéns e suas conexões
 class Graph {
@@ -29,5 +30,5 @@ public:
 
   //@Função que retorna os vizinhos de um armazém específico
   //@ @param warehouseIndex Índice do armazém
-  LinkedList getNeighbors(int warehouseIndex) const;
+  LinkedList<Warehouse> getNeighbors(int warehouseIndex) const;
 };
