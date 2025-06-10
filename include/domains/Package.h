@@ -34,8 +34,7 @@ private:
 public:
   //@ Construtor padrão
   //@ @param ID ID único do pacote
-  Package(int ID, int initialOrigin, int finalDestination, int postDate,
-          int expectedStorageTime);
+  Package(int ID, int initialOrigin, int finalDestination, int postDate);
 
   //@ Função que retorna o ID do pacote
   int getId() const noexcept;

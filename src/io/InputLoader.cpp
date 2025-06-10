@@ -34,7 +34,7 @@ InputLoader::ConfigData InputLoader::loadInput(const std::string &filename) {
   data.packages = new Package *[data.numPackages];
   for (int i = 0; i < data.numPackages; ++i) {
     int postTime, id, origin, destination;
-    std::string pac, org, dst; // Strings para consumir "pac", "org", "dst"
+    std::string pac, org, dst; 
     file >> postTime >> pac >> id >> org >> origin >> dst >> destination;
     data.packages[i] = new Package(id, origin, destination, postTime);
   }
