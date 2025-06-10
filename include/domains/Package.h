@@ -25,6 +25,10 @@ private:
   //@ trânsito e o tempo esperado de armazenamento
   int timeStored, timeInTransit;
 
+  //@ Atributo que guarda a localização atual do pacote (começa como o armazém de
+  //@ origem)
+  int currentLocation;
+
   //@ Atributo que guarda o estado do pacote (começa como NOT_POSTED)
   PackageState state;
 
@@ -63,6 +67,9 @@ public:
   //@ Função que retorna o tempo em trânsito do pacote
   int getTimeInTransit() const noexcept;
 
+  //@ Função que retorna a localização atual do pacote
+  int getCurrentLocation() const noexcept;
+
   //@ Função que retorna o estado do pacote
   PackageState getState() const noexcept;
 
@@ -72,6 +79,10 @@ public:
   //@ Função que seta o tempo que o pacote ficou em trânsito
   //@ @param time Tempo que o pacote ficou em trânsito
   void setTimeInTransit(int time);
+
+  //@ Função que seta a localização atual do pacote
+  //@ @param location ID do armazém onde o pacote está localizado
+  void setCurrentLocation(int location);
 
   //@ Função que seta o tempo de armazenamento do pacote
   //@ @param time Tempo que o pacote ficou armazenado

@@ -13,9 +13,7 @@ int Package::getId() const noexcept { return this->ID; }
 // std::string Package::getRecipient() const noexcept { return this->recipient;
 // }
 
-int Package::getInitialOrigin() const noexcept {
-  return this->initialOrigin;
-}
+int Package::getInitialOrigin() const noexcept { return this->initialOrigin; }
 
 int Package::getFinalDestination() const noexcept {
   return this->finalDestination;
@@ -27,6 +25,9 @@ int Package::getTimeStored() const noexcept { return this->timeStored; }
 
 int Package::getTimeInTransit() const noexcept { return this->timeInTransit; }
 
+int Package::getCurrentLocation() const noexcept {
+  return this->currentLocation;
+}
 
 PackageState Package::getState() const noexcept { return this->state; }
 
@@ -34,8 +35,12 @@ LinkedList<int> Package::getRoute() const noexcept { return this->route; }
 
 void Package::setTimeInTransit(int time) { this->timeInTransit = time; }
 
+void Package::setCurrentLocation(int location) {
+  this->currentLocation = location;
+}
+
 void Package::setTimeStored(int time) { this->timeStored = time; }
 
-void Package::setRoute(const LinkedList<int>& newRoute) noexcept {
+void Package::setRoute(const LinkedList<int> &newRoute) noexcept {
   this->route = newRoute;
 }
