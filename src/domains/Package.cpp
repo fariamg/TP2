@@ -35,3 +35,7 @@ LinkedList<int> Package::getRoute() const noexcept { return this->route; }
 void Package::setTimeInTransit(int time) { this->timeInTransit = time; }
 
 void Package::setTimeStored(int time) { this->timeStored = time; }
+
+void Package::setRoute(const LinkedList<int>& newRoute) noexcept {
+  this->route = newRoute;
+}

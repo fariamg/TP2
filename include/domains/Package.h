@@ -76,4 +76,7 @@ public:
   //@ Função que seta o tempo de armazenamento do pacote
   //@ @param time Tempo que o pacote ficou armazenado
   void setTimeStored(int time);
+
+  //@ Função que seta a melhor rota entre armazéns para o pacote
+  void setRoute(const LinkedList<int>& newRoute) noexcept;
 };
