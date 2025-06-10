@@ -39,7 +39,7 @@ LinkedList<int> Graph::getNeighbors(int warehouseIndex) const {
   for (int j = 0; j < numWarehouses; ++j) {
     if (this->adjacencyMatrix[warehouseIndex][j] > 0) {
       Warehouse neighbor(j, numWarehouses);
-      neighbors.add(neighbor.getId());
+      neighbors.addBack(neighbor.getId());
     }
 
     return neighbors;

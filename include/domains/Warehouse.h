@@ -8,7 +8,7 @@ private:
   //@ Atributo identificador do armazém
   int ID;
 
-  //@ Pilhas de pacotes do armazém
+  //@ Pilhas de pacotes do armazém (escolha de array pois o acesso se torna mais rapido)
   Stack* sessions;
 
   //@ Total de armazens no sistema

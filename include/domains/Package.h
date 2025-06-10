@@ -29,7 +29,7 @@ private:
   PackageState state;
 
   //@ Atributo que guarda a rota ótima entre armazéns para o pacote
-  LinkedList<Warehouse> route;
+  LinkedList<int> route;
 
 public:
   //@ Construtor padrão
@@ -50,10 +50,10 @@ public:
   std::string getType() const noexcept;
 
   //@ Função que retorna o armazém de origem do pacote
-  Warehouse getInitialOrigin() const noexcept;
+  int getInitialOrigin() const noexcept;
 
   //@ Função que retorna o armazém de destino do pacote
-  Warehouse getFinalDestination() const noexcept;
+  int getFinalDestination() const noexcept;
 
   //@ Função que retorna a data de postagem do pacote
   int getPostDate() const noexcept;
@@ -71,7 +71,7 @@ public:
   PackageState getState() const noexcept;
 
   //@ Função que retorna a rota ótima entre armazéns para o pacote
-  LinkedList<Warehouse> getRoute() const noexcept;
+  LinkedList<int> getRoute() const noexcept;
 
   //@ Função que seta o tempo que o pacote ficou em trânsito
   //@ @param time Tempo que o pacote ficou em trânsito
