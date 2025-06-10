@@ -1,6 +1,5 @@
 #include "Warehouse.h"
 
-Warehouse::Warehouse() : ID(0), totalWarehouses(0), sessions(nullptr) {}
 
 Warehouse::Warehouse(int ID, int totalWarehouses) : ID(ID), totalWarehouses(totalWarehouses) {
     this->sessions = new Stack[totalWarehouses];

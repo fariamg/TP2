@@ -18,7 +18,6 @@ public:
   //@ @param ID Identificador único do armazém
   // TODO: PASSAR AQUI A CAPACIDADE DO ARMAZEM QUE PASSA PARA O CONSTRUTOR DA
   // PILHA INTERNO ( PONTO EXTRA)
-  Warehouse();
   Warehouse(int ID, int totalWarehouses);
   //@ Destrutor
   ~Warehouse();
