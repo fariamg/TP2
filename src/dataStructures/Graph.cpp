@@ -23,24 +23,25 @@ void Graph::addEdge(int i, int j, int capacity) {
     throw std::out_of_range("Índices fora do intervalo do grafo");
   }
 
-  this->adjacencyMatrix[i][j] = capacity; 
+  this->adjacencyMatrix[i][j] = capacity;
   this->adjacencyMatrix[j][i] = capacity;
 }
 
-LinkedList<Warehouse> Graph::getNeighbors(int warehouseIndex) const{
+LinkedList<int> Graph::getNeighbors(int warehouseIndex) const {
   for (int i = 0; i < numWarehouses; ++i) {
     if (i < 0 || i >= numWarehouses) {
       throw std::out_of_range("Índice fora do intervalo do grafo");
     }
   }
 
-  LinkedList<Warehouse> neighbors;
+  LinkedList<int> neighbors;
 
   for (int j = 0; j < numWarehouses; ++j) {
     if (this->adjacencyMatrix[warehouseIndex][j] > 0) {
-      neighbors.add(Warehouse(j)); 
+      Warehouse neighbor(j, numWarehouses);
+      neighbors.add(neighbor.getId());
     }
-  }
 
-  return neighbors;
+    return neighbors;
+  }
 }
