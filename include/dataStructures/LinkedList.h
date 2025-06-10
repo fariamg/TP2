@@ -47,7 +47,7 @@ public:
   bool isEmpty() const noexcept { return this->head == nullptr; }
 
   //@ Função que adiciona um novo nó ao final da lista
-  void add(const T &data) {
+  void addBack(const T &data) {
     Node *newNode = new Node(data);
 
     if (isEmpty()) {
@@ -56,6 +56,20 @@ public:
     } else {
       this->tail->next = newNode;
       this->tail = newNode;
+    }
+    this->currentSize++;
+  }
+
+  //@ Função que adiciona um novo nó ao início da lista
+  void addFront(const T &data) {
+    Node *newNode = new Node(data);
+
+    if (isEmpty()) {
+      this->head = newNode;
+      this->tail = newNode;
+    } else {
+      newNode->next = this->head;
+      this->head = newNode;
     }
     this->currentSize++;
   }
