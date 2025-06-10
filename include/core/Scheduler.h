@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MinHeap.h"
-#include "Timer.h"
+#include "../measurement/Timer.h"
 
 //@ Classe que implementa o escalonador de eventos
 class Scheduler {
