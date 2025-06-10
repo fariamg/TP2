@@ -1,0 +1,1 @@
+//* Toda implementação foi feita no header, devido às boas práticas, visto o uso de templates.
