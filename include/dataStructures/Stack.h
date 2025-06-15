@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Package.h"
+#include "domains/Package.h"
 
 // @ Classe que representa uma pilha de pacotes armazenada no Warehouse
 class Stack {

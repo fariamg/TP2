@@ -1,4 +1,4 @@
-#include "Warehouse.h"
+#include "../include/domains/Warehouse.h"
 
 Warehouse::Warehouse(int ID, int totalWarehouses)
     : ID(ID), totalWarehouses(totalWarehouses) {

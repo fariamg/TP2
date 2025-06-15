@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Warehouse.h"
+#include "domains/Warehouse.h"
 
 //@ Classe que implementa o grafo para representar os armazéns e suas conexões
 class Graph {
@@ -26,6 +26,11 @@ public:
   //@ @param capacity Capacidade de transporte entre os armazéns
   //TODO: ADICIONAR UM PAIR JUNTO COM CAPCIDADE PARA REPRESENTAR O TEMPO ENTRE DOIS ARMAZENS SENDO VARIVEL A CADA CONEXÃO (PONTO EXTRA)
   void addEdge(int i, int j, int capacity);
+
+  //@ Função que verifica a existência de uma aresta entre dois armazéns
+  //@ @param i Índice do primeiro armazém
+  //@ @param j Índice do segundo armazém
+  bool hasEdge(int i, int j) const;
 
   //@Função que retorna os vizinhos de um armazém específico
   //@ @param warehouseIndex Índice do armazém

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Stack.h"
+#include "dataStructures/Stack.h"
 
 //@ Classe que implementa o domínio armazem
 class Warehouse {
@@ -9,6 +9,7 @@ private:
   int ID;
 
   //@ Pilhas de pacotes do armazém (escolha de array pois o acesso se torna mais rapido)
+  //! Sei que o máximo de pilhas vai ser o máximo de armazens no sistema
   Stack* sessions;
 
   //@ Total de armazens no sistema
@@ -19,6 +20,7 @@ public:
   // TODO: PASSAR AQUI A CAPACIDADE DO ARMAZEM QUE PASSA PARA O CONSTRUTOR DA
   // PILHA INTERNO ( PONTO EXTRA)
   Warehouse(int ID, int totalWarehouses);
+  
   //@ Destrutor
   ~Warehouse();
 

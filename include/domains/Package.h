@@ -1,8 +1,8 @@
 #pragma once
 
-#include "LinkedList.h"
-#include "PackageState.h"
-#include "Warehouse.h"
+#include "dataStructures/LinkedList.h"
+#include "enums/PackageState.h"
+#include "domains/Warehouse.h"
 #include <string>
 
 //@ Classe que representa um pacote
@@ -90,4 +90,7 @@ public:
 
   //@ Função que seta a melhor rota entre armazéns para o pacote
   void setRoute(const LinkedList<int>& newRoute) noexcept;
+
+  //@ Função que seta o estado do pacote
+  void setState(PackageState newState) noexcept;
 };

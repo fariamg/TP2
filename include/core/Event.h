@@ -1,7 +1,7 @@
 #pragma once
 
-#include "EventType.h"
-#include "Package.h"
+#include "enums/EventType.h"
+#include "domains/Package.h"
 
 //@ Classe que implementa um evento da simulação
 class Event {

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Event.h"
+#include "core/Event.h"
 
 //@ Classe de implementação de um MinHeap para o escalonador de eventos de maior prioridade
 class MinHeap {
 private:
-  //@ Array de Event ponteiros que representa o heap
+  //@ Array de ponteiros para Events
   Event **heapArray;
 
   //@ Capacidade máxima do heap e tamanho atual
