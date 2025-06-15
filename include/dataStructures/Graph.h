@@ -20,11 +20,13 @@ public:
   //@ Função que retorna o número de armazéns no grafo
   int getNumWarehouses() const noexcept;
 
-  //@ Função para adicionar uma aresta entre dois armazéns e a capacidade de transporte entre eles
+  //@ Função para adicionar uma aresta entre dois armazéns e a capacidade de
+  //transporte entre eles
   //@ @param i Índice do primeiro armazém
   //@ @param j Índice do segundo armazém
   //@ @param capacity Capacidade de transporte entre os armazéns
-  //TODO: ADICIONAR UM PAIR JUNTO COM CAPCIDADE PARA REPRESENTAR O TEMPO ENTRE DOIS ARMAZENS SENDO VARIVEL A CADA CONEXÃO (PONTO EXTRA)
+  // TODO: ADICIONAR UM PAIR JUNTO COM CAPCIDADE PARA REPRESENTAR O TEMPO ENTRE
+  // DOIS ARMAZENS SENDO VARIVEL A CADA CONEXÃO (PONTO EXTRA)
   void addEdge(int i, int j, int capacity);
 
   //@ Função que verifica a existência de uma aresta entre dois armazéns
@@ -34,5 +36,5 @@ public:
 
   //@Função que retorna os vizinhos de um armazém específico
   //@ @param warehouseIndex Índice do armazém
-  LinkedList<int> getNeighbors(int warehouseIndex) const;
+  LinkedList getNeighbors(int warehouseIndex) const;
 };

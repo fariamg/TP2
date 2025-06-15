@@ -12,6 +12,6 @@ namespace Routing {
 //@ @param originID ID do armazém de origem
 //@ @param destinationID ID do armazém de destino
 //@ @param graph Grafo que representa os armazéns e suas conexões
-LinkedList<int> calculateOptimalRoute(int origninID, int destinationID,
-                                      const Graph &graph);
-}
+LinkedList calculateOptimalRoute(int origninID, int destinationID,
+                                 const Graph &graph);
+} // namespace Routing

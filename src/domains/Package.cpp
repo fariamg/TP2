@@ -31,7 +31,7 @@ int Package::getCurrentLocation() const noexcept {
 
 PackageState Package::getState() const noexcept { return this->state; }
 
-LinkedList<int> Package::getRoute() const noexcept { return this->route; }
+LinkedList Package::getRoute() const noexcept { return this->route; }
 
 void Package::setTimeInTransit(int time) { this->timeInTransit = time; }
 
@@ -41,7 +41,7 @@ void Package::setCurrentLocation(int location) {
 
 void Package::setTimeStored(int time) { this->timeStored = time; }
 
-void Package::setRoute(const LinkedList<int> &newRoute) noexcept {
+void Package::setRoute(const LinkedList &newRoute) noexcept {
   this->route = newRoute;
 }
 

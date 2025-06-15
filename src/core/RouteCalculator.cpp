@@ -2,10 +2,10 @@
 #include "../include/dataStructures/Graph.h"
 
 namespace Routing {
-LinkedList<int> calculateShortestRoute(int originId, int destinationId,
-                                       const Graph &graph) {
+LinkedList calculateShortestRoute(int originId, int destinationId,
+                                  const Graph &graph) {
   int numWarehouses = graph.getNumWarehouses();
-  LinkedList<int> finalRoute;
+  LinkedList finalRoute;
 
   if (originId == destinationId) {
     finalRoute.addFront(originId);
@@ -19,7 +19,7 @@ LinkedList<int> calculateShortestRoute(int originId, int destinationId,
     predecessor[i] = -1;
   }
 
-  LinkedList<int> bfsQueue;
+  LinkedList bfsQueue;
 
   visited[originId] = true;
   bfsQueue.addBack(originId);
@@ -34,7 +34,7 @@ LinkedList<int> calculateShortestRoute(int originId, int destinationId,
       break;
     }
 
-    LinkedList<int> neighbors = graph.getNeighbors(currentWarehouse);
+    LinkedList neighbors = graph.getNeighbors(currentWarehouse);
 
     while (!neighbors.isEmpty()) {
       int neighbor = neighbors.peekFront();
@@ -49,7 +49,7 @@ LinkedList<int> calculateShortestRoute(int originId, int destinationId,
   }
 
   if (pathFound) {
-    LinkedList<int> reversedPath;
+    LinkedList reversedPath;
     int crawl = destinationId;
 
     while (crawl != -1) {
@@ -68,4 +68,4 @@ LinkedList<int> calculateShortestRoute(int originId, int destinationId,
 
   return finalRoute;
 }
-} 
+} // namespace Routing

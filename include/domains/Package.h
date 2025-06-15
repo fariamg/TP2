@@ -1,8 +1,8 @@
 #pragma once
 
 #include "dataStructures/LinkedList.h"
-#include "enums/PackageState.h"
 #include "domains/Warehouse.h"
+#include "enums/PackageState.h"
 #include <string>
 
 //@ Classe que representa um pacote
@@ -25,7 +25,8 @@ private:
   //@ trânsito e o tempo esperado de armazenamento
   int timeStored, timeInTransit;
 
-  //@ Atributo que guarda a localização atual do pacote (começa como o armazém de
+  //@ Atributo que guarda a localização atual do pacote (começa como o armazém
+  //de
   //@ origem)
   int currentLocation;
 
@@ -33,7 +34,7 @@ private:
   PackageState state;
 
   //@ Atributo que guarda a rota ótima entre armazéns para o pacote
-  LinkedList<int> route;
+  LinkedList route;
 
 public:
   //@ Construtor padrão
@@ -74,7 +75,7 @@ public:
   PackageState getState() const noexcept;
 
   //@ Função que retorna a rota ótima entre armazéns para o pacote
-  LinkedList<int> getRoute() const noexcept;
+  LinkedList getRoute() const noexcept;
 
   //@ Função que seta o tempo que o pacote ficou em trânsito
   //@ @param time Tempo que o pacote ficou em trânsito
@@ -89,7 +90,7 @@ public:
   void setTimeStored(int time);
 
   //@ Função que seta a melhor rota entre armazéns para o pacote
-  void setRoute(const LinkedList<int>& newRoute) noexcept;
+  void setRoute(const LinkedList &newRoute) noexcept;
 
   //@ Função que seta o estado do pacote
   void setState(PackageState newState) noexcept;
