@@ -1,5 +1,5 @@
 #include "../include/io/InputLoader.h"
-#include "domains/Warehouse.h"
+#include "../include/domains/Warehouse.h"
 #include <fstream>
 #include <stdexcept>
 

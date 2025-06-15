@@ -1,4 +1,4 @@
-#include "Event.h"
+#include "../include/core/Event.h"
 
 Event::Event(int time, Package *package)
     : type(EventType::PACKAGE_ARRIVAL), time(time), package(package),

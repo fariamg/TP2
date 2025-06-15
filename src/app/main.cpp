@@ -2,7 +2,7 @@
 #include <string>
 #include <stdexcept>
 
-#include "core/Simulation.h"
+#include "../include/core/Simulation.h"
 #include "io/InputLoader.h"
 
 int main(int argc, char* argv[]) {

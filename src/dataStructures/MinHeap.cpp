@@ -9,7 +9,6 @@ MinHeap::MinHeap(int capacity) : capacity(capacity), currentSize(0) {
 //! (responsabilidade unica)
 MinHeap::~MinHeap() { delete[] heapArray; }
 
-// TODO: SOBRECARREGAR OPERATOR NA CLASSE EVENT PARA COMPARAÇÃO
 void MinHeap::heapifyUp(int index) {
   while (index > 0 && *heapArray[index] < *heapArray[parent(index)]) {
     swap(heapArray[index], heapArray[parent(index)]);

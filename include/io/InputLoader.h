@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Graph.h"
-#include "Package.h"
+#include "../include/dataStructures/Graph.h"
+#include "../include/domains/Package.h"
 
 //@ Estrutura responsável por interagir com o arquivo de entrada
 namespace IO {

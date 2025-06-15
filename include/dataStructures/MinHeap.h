@@ -46,6 +46,4 @@ public:
 
   //@ Função que retorna um booleno indicando se o heap está cheio
   bool isEmpty() const noexcept;
-  // void clear();
-  // void printHeap() const;
 };
