@@ -32,8 +32,11 @@ public:
   //@ @event Evento a ser adicionado
   void addEvent(Event *event);
 
-  //@ Função qeu retorna o próximo evento a ser executado
+  //@ Função que retorna o próximo evento a ser executado
   Event *getNextEvent();
+
+  //@ Função que remove o próximo evento da fila de prioridade
+  void *removeNextEvent();
 
   //@ Função que avança o relogio da simulação
   //@ @param timeToAdd Tempo a ser adicinado no timer da simulação
@@ -44,7 +47,4 @@ public:
 
   //@ Função que verifica se ainda há eventos a serem processados
   bool isEmpty() const noexcept;
-
-  //@FUnção que calcula as rotas otimas de cada pacote
-  void calculateRoutes() noexcept;
 };

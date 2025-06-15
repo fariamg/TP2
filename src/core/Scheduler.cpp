@@ -16,6 +16,14 @@ void Scheduler::addEvent(Event *event) {
 }
 
 Event *Scheduler::getNextEvent() {
+    return this->eventsHeap.peekMin();
+}
+
+void *Scheduler::removeNextEvent() {
+    if (this->eventsHeap.isEmpty()) {
+        return nullptr;
+    }
+    this->totalEvents--;
     return this->eventsHeap.extractMin();
 }
 
@@ -29,10 +37,4 @@ int Scheduler::getCurrentTime() const noexcept {
 
 bool Scheduler::isEmpty() const noexcept {
     return this->eventsHeap.isEmpty();
-}
-
-void Scheduler::calculateRoutes() noexcept {
-    for (int i = 0; i < this->totalEvents; ++i) {
-        this->eventsHeap.peekMin()
-    }
 }

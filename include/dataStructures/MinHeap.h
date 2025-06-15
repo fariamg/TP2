@@ -39,7 +39,7 @@ public:
   void insert(Event *event);
 
   //@Função de extração do menor evento do heap
-  Event *extractMin();
+  void *extractMin();
 
   //@ Função para espiar o menor evento do heap sem removê-lo
   Event *peekMin() const;

@@ -53,4 +53,4 @@ ConfigData loadConfiguration(const std::string &filename) {
   return data;
 }
 
-} // namespace IO
+} 

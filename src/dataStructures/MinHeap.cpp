@@ -66,7 +66,7 @@ void MinHeap::insert(Event *event) {
   currentSize++;
 }
 
-Event *MinHeap::extractMin() {
+void *MinHeap::extractMin() {
   if (isEmpty()) {
     throw std::out_of_range("Heap is empty");
   }
@@ -81,8 +81,6 @@ Event *MinHeap::extractMin() {
   currentSize--;
 
   heapifyDown(0);
-
-  return minEvent;
 }
 
 Event *MinHeap::peekMin() const {
