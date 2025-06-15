@@ -3,6 +3,10 @@
 Warehouse::Warehouse(int ID, int totalWarehouses)
     : ID(ID), totalWarehouses(totalWarehouses) {
   this->sessions = new Session[totalWarehouses];
+  
+  for (int i = 0; i < totalWarehouses; ++i) {
+    this->sessions[i].destinationId = i;
+  }
 }
 
 Warehouse::~Warehouse() { delete[] this->sessions; }
