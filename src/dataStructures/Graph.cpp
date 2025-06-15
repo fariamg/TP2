@@ -27,6 +27,14 @@ void Graph::addEdge(int i, int j, int capacity) {
   this->adjacencyMatrix[j][i] = capacity;
 }
 
+bool Graph::hasEdge(int i, int j) const {
+  if (i < 0 || i >= numWarehouses || j < 0 || j >= numWarehouses) {
+    throw std::out_of_range("Índices fora do intervalo do grafo");
+  }
+
+  return this->adjacencyMatrix[i][j] > 0;
+}
+
 LinkedList<int> Graph::getNeighbors(int warehouseIndex) const {
   for (int i = 0; i < numWarehouses; ++i) {
     if (i < 0 || i >= numWarehouses) {

@@ -44,3 +44,7 @@ void Package::setTimeStored(int time) { this->timeStored = time; }
 void Package::setRoute(const LinkedList<int> &newRoute) noexcept {
   this->route = newRoute;
 }
+
+void Package::setState(PackageState newState) noexcept {
+  this->state = newState;
+}
