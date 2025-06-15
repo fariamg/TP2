@@ -3,6 +3,8 @@
 #include "utils/Timer.h"
 #include "dataStructures/MinHeap.h"
 
+static constexpr size_t MAX_EVENTS = 1000; 
+
 //@ Classe que implementa o escalonador de eventos
 class Scheduler {
 private:
@@ -12,10 +14,19 @@ private:
   //@ Timer que controla o tempo dos eventos
   Timer timer;
 
+  //@ Atributo que guarda o numero de eventos atuais
+  int totalEvents;
+
 public:
   // TODO: ver se faz sentido essa limite de eventos
   //@ Construtor que inicializa o escalonador
   Scheduler(int maxEvents);
+
+  //@ Getter que retorna o número total de eventos
+  int getTotalEvents() const noexcept;
+
+  //@ Função que incrementa o número total de eventos
+  void incrementTotalEvents() noexcept; 
 
   //@ Adiciona um novo evento á fila de prioridade
   //@ @event Evento a ser adicionado
@@ -33,4 +44,7 @@ public:
 
   //@ Função que verifica se ainda há eventos a serem processados
   bool isEmpty() const noexcept;
+
+  //@FUnção que calcula as rotas otimas de cada pacote
+  void calculateRoutes() noexcept;
 };

@@ -1,9 +1,18 @@
 #include "../include/core/Scheduler.h"
 
-Scheduler::Scheduler(int maxEvents) : eventsHeap(maxEvents), timer() {}
+Scheduler::Scheduler(int maxEvents = MAX_EVENTS) : eventsHeap(maxEvents), timer() {}
+
+int Scheduler::getTotalEvents() const noexcept {
+    return this->totalEvents;
+}
+
+void Scheduler::incrementTotalEvents() noexcept {
+    this->totalEvents++;
+}
 
 void Scheduler::addEvent(Event *event) {
     this->eventsHeap.insert(event);
+    this->incrementTotalEvents();
 }
 
 Event *Scheduler::getNextEvent() {
@@ -20,4 +29,10 @@ int Scheduler::getCurrentTime() const noexcept {
 
 bool Scheduler::isEmpty() const noexcept {
     return this->eventsHeap.isEmpty();
+}
+
+void Scheduler::calculateRoutes() noexcept {
+    for (int i = 0; i < this->totalEvents; ++i) {
+        this->eventsHeap.peekMin()
+    }
 }
