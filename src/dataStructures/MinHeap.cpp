@@ -11,6 +11,10 @@ MinHeap::~MinHeap() {
     delete[] heapArray;
 }
 
+int MinHeap::getCurrentSize() const noexcept {
+    return currentSize;
+}
+
 void MinHeap::heapifyUp(int index) {
     while (index > 0 && *heapArray[index] < *heapArray[parent(index)]) {
         swap(heapArray[index], heapArray[parent(index)]);

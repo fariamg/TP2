@@ -41,6 +41,9 @@ class MinHeap {
     //@Função de extração do menor evento do heap
     void extractMin();
 
+    //@ Função que retorna o tamanho atual do heap
+    int getCurrentSize() const noexcept;
+
     //@ Função para espiar o menor evento do heap sem removê-lo
     Event* peekMin() const;
 

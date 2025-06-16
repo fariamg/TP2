@@ -1,18 +1,19 @@
 #include "../include/core/Scheduler.h"
 
-Scheduler::Scheduler(int maxEvents = MAX_EVENTS) : eventsHeap(maxEvents), timer() {}
+Scheduler::Scheduler(int maxEvents, const IO::ConfigData& configData) : eventsHeap(maxEvents), timer() {
+    this->transportCapacity = configData.transportCapacity;
+    this->transportLatency = configData.transportLatency;
+    this->transportInterval = configData.transportInterval;
+    this->removalCost = configData.removalCost;
+}
 
 int Scheduler::getTotalEvents() const noexcept {
-    return this->totalEvents;
+    return this->eventsHeap.getCurrentSize();
 }
 
-void Scheduler::incrementTotalEvents() noexcept {
-    this->totalEvents++;
-}
 
 void Scheduler::addEvent(Event* event) {
     this->eventsHeap.insert(event);
-    this->incrementTotalEvents();
 }
 
 Event* Scheduler::getNextEvent() {
@@ -23,7 +24,6 @@ void Scheduler::removeNextEvent() {
     if (this->eventsHeap.isEmpty()) {
         throw std::out_of_range("No events to remove");
     }
-    this->totalEvents--;
     this->eventsHeap.extractMin();
 }
 
