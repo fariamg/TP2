@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) {
         }
 
         for (int i = 0; i < data.numPackages; ++i) {
-            std::cout << "Pacote " << i << ": ID = " << data.packages[i]->getId() << ", Origem = " << data.packages[i]->getInitialOrigin()
-                      << ", Destino = " << data.packages[i]->getFinalDestination() << std::endl;
+            std::cout << "Pacote " << i << ": ID = " << data.packages[i]->getId() << ", Origem = " << data.packages[i]->getInitialOrigin() << ", Destino = " << data.packages[i]->getFinalDestination()
+                      << std::endl;
         }
 
         // MOSTRA AS CONEXÕES ENTRE OS ARMAZÉNS

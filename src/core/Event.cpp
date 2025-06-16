@@ -1,11 +1,9 @@
 #include "../include/core/Event.h"
 
-Event::Event(int time, Package* package)
-    : type(EventType::PACKAGE_ARRIVAL), time(time), package(package), originWarehouseId(-1), destinationWarehouseId(-1) {}
+Event::Event(int time, Package* package) : type(EventType::PACKAGE_ARRIVAL), time(time), package(package), originWarehouseId(-1), destinationWarehouseId(-1) {}
 
 Event::Event(int time, int originWarehouseId, int destinationWarehouseId)
-    : type(EventType::TRANSPORT), time(time), package(nullptr), originWarehouseId(originWarehouseId), destinationWarehouseId(destinationWarehouseId) {
-}
+    : type(EventType::TRANSPORT), time(time), package(nullptr), originWarehouseId(originWarehouseId), destinationWarehouseId(destinationWarehouseId) {}
 
 // TODO: se o tempo for igual, usar qual critério de desempate?
 bool Event::operator<(const Event& other) const noexcept {
