@@ -18,4 +18,4 @@ struct ConfigData {
 };
 
 ConfigData loadInput(const std::string &filePath);
-}; 
+}; // namespace IO

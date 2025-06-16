@@ -2,7 +2,7 @@
 #include "../include/dataStructures/Graph.h"
 
 namespace Routing {
-LinkedList calculateShortestRoute(int originId, int destinationId,
+LinkedList calculateOptimalRoute(int originId, int destinationId,
                                   const Graph &graph) {
   int numWarehouses = graph.getNumWarehouses();
   LinkedList finalRoute;
@@ -68,4 +68,4 @@ LinkedList calculateShortestRoute(int originId, int destinationId,
 
   return finalRoute;
 }
-} // namespace Routing
+} 
