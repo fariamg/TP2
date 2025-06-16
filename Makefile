@@ -1,48 +1,47 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -g
+CXXFLAGS = -Wall -Wextra -std=c++17 -Iinclude
 LDFLAGS =
 
 # Directories
-SRC_DIR = src
-OBJ_DIR = build
-BIN_DIR = bin
-INCLUDE_DIR = include
-
-# Find all .cpp files
-SOURCES = $(wildcard $(SRC_DIR)/app/*.cpp) \
-          $(wildcard $(SRC_DIR)/core/*.cpp) \
-          $(wildcard $(SRC_DIR)/dataStructures/*.cpp) \
-          $(wildcard $(SRC_DIR)/domains/*.cpp) \
-          $(wildcard $(SRC_DIR)/io/*.cpp) \
-          $(wildcard $(SRC_DIR)/ui/*.cpp) 
-
-# Object files (replace src/ with obj/ and .cpp with .o)
-OBJECTS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
+SRCDIR = src
+OBJDIR = obj
+BINDIR = bin
 
 # Executable name
-EXECUTABLE = $(BIN_DIR)/simulation
+EXECUTABLE = $(BINDIR)/tp2.out
 
-# Default target
+# Find all .cpp files recursively in SRCDIR
+# This will find files like src/app/main.cpp, src/utils/IO.cpp, etc.
+SOURCES = $(shell find $(SRCDIR) -name '*.cpp')
+
+# Generate .o file names from .cpp file names, placing them in OBJDIR,
+# preserving the subdirectory structure from SRCDIR.
+# e.g., src/app/main.cpp -> obj/app/main.o
+OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
+
+# Default target: 'all'
 all: $(EXECUTABLE)
 
 # Rule to link the executable
 $(EXECUTABLE): $(OBJECTS)
-	@mkdir -p $(BIN_DIR)
-	$(CXX) $(OBJECTS) -o $@ $(LDFLAGS)
-	@echo "Linking complete: $@"
+	@mkdir -p $(BINDIR) 
+	$(CXX) $(LDFLAGS) $^ -o $@
+	@echo "Executable $(EXECUTABLE) created successfully."
 
-# Rule to compile source files into object files
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
-	@echo "Compiled: $< -> $@"
+# Rule to compile .cpp files to .o files
+# This pattern rule handles all .cpp files found by the SOURCES variable.
+# It creates the necessary subdirectory structure within OBJDIR.
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	@mkdir -p $(dir $@) 
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+	@echo "Compiled $< to $@"
 
-# Clean rule
+# Clean target: removes obj and bin directories
 clean:
-	@echo "Cleaning up..."
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
+	@echo "Cleaning up object and binary files..."
+	rm -rf $(OBJDIR) $(BINDIR)
 	@echo "Cleanup complete."
 
-# Phony targets
+# Phony targets: targets that are not actual files
 .PHONY: all clean
