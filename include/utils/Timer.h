@@ -2,18 +2,18 @@
 
 //@ Classe responsável por orquestrar tempo das movimentações
 class Timer {
-private:
-  //@ Atributos que guardam inicio e fim
-  int time;
+  private:
+    //@ Atributos que guardam inicio e fim
+    int time;
 
-public:
-  //@ Contrutor padrão
-  Timer();
+  public:
+    //@ Contrutor padrão
+    Timer();
 
-  //@ Função que retorna o tempo atual acumulado
-  int getTime() const noexcept;
+    //@ Função que retorna o tempo atual acumulado
+    int getTime() const noexcept;
 
-  //@ Função que adiciona tempo ao timer
-  //@ @param time Tempo a ser adicionado
-  void addTime(int time);
+    //@ Função que adiciona tempo ao timer
+    //@ @param time Tempo a ser adicionado
+    void addTime(int time);
 };

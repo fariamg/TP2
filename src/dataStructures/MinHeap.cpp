@@ -2,87 +2,97 @@
 #include <stdexcept>
 
 MinHeap::MinHeap(int capacity) : capacity(capacity), currentSize(0) {
-  heapArray = new Event *[capacity];
+    heapArray = new Event*[capacity];
 }
 
 //! Deleta apenas a memoria do array de ponteiros, não os eventos
 //! (responsabilidade unica)
-MinHeap::~MinHeap() { delete[] heapArray; }
+MinHeap::~MinHeap() {
+    delete[] heapArray;
+}
 
 void MinHeap::heapifyUp(int index) {
-  while (index > 0 && *heapArray[index] < *heapArray[parent(index)]) {
-    swap(heapArray[index], heapArray[parent(index)]);
-    index = parent(index);
-  }
+    while (index > 0 && *heapArray[index] < *heapArray[parent(index)]) {
+        swap(heapArray[index], heapArray[parent(index)]);
+        index = parent(index);
+    }
 }
 
 void MinHeap::heapifyDown(int index) {
-  int smallest = index;
-  int left = leftChild(index);
-  int right = rightChild(index);
+    int smallest = index;
+    int left = leftChild(index);
+    int right = rightChild(index);
 
-  if (left < currentSize && *heapArray[left] < *heapArray[smallest]) {
-    smallest = left;
-  }
+    if (left < currentSize && *heapArray[left] < *heapArray[smallest]) {
+        smallest = left;
+    }
 
-  if (right < currentSize && *heapArray[right] < *heapArray[smallest]) {
-    smallest = right;
-  }
+    if (right < currentSize && *heapArray[right] < *heapArray[smallest]) {
+        smallest = right;
+    }
 
-  if (smallest != index) {
-    swap(heapArray[index], heapArray[smallest]);
-    heapifyDown(smallest);
-  }
+    if (smallest != index) {
+        swap(heapArray[index], heapArray[smallest]);
+        heapifyDown(smallest);
+    }
 }
 
-int MinHeap::parent(int index) const noexcept { return (index - 1) / 2; }
-
-int MinHeap::leftChild(int index) const noexcept { return 2 * index + 1; }
-
-int MinHeap::rightChild(int index) const noexcept { return 2 * index + 2; }
-
-void MinHeap::swap(Event *&a, Event *&b) {
-  if (a == nullptr || b == nullptr) {
-    throw std::invalid_argument("Cannot swap null pointers");
-  }
-
-  Event *temp = a;
-  a = b;
-  b = temp;
+int MinHeap::parent(int index) const noexcept {
+    return (index - 1) / 2;
 }
 
-bool MinHeap::isEmpty() const noexcept { return currentSize == 0; }
+int MinHeap::leftChild(int index) const noexcept {
+    return 2 * index + 1;
+}
 
-void MinHeap::insert(Event *event) {
-  if (currentSize >= capacity) {
-    throw std::overflow_error("Heap is full");
-  }
+int MinHeap::rightChild(int index) const noexcept {
+    return 2 * index + 2;
+}
 
-  heapArray[currentSize] = event;
+void MinHeap::swap(Event*& a, Event*& b) {
+    if (a == nullptr || b == nullptr) {
+        throw std::invalid_argument("Cannot swap null pointers");
+    }
 
-  heapifyUp(currentSize);
+    Event* temp = a;
+    a = b;
+    b = temp;
+}
 
-  currentSize++;
+bool MinHeap::isEmpty() const noexcept {
+    return currentSize == 0;
+}
+
+void MinHeap::insert(Event* event) {
+    if (currentSize >= capacity) {
+        throw std::overflow_error("Heap is full");
+    }
+
+    heapArray[currentSize] = event;
+
+    heapifyUp(currentSize);
+
+    currentSize++;
 }
 
 void MinHeap::extractMin() {
-  if (isEmpty()) {
-    throw std::out_of_range("Heap is empty");
-  }
+    if (isEmpty()) {
+        throw std::out_of_range("Heap is empty");
+    }
 
-  if (currentSize == 1) {
-    currentSize--;
-  } else {
-    heapArray[0] = heapArray[currentSize - 1];
-    currentSize--;
-    heapifyDown(0);
-  }
+    if (currentSize == 1) {
+        currentSize--;
+    } else {
+        heapArray[0] = heapArray[currentSize - 1];
+        currentSize--;
+        heapifyDown(0);
+    }
 }
 
-Event *MinHeap::peekMin() const {
-  if (isEmpty()) {
-    throw std::out_of_range("Heap is empty");
-  }
+Event* MinHeap::peekMin() const {
+    if (isEmpty()) {
+        throw std::out_of_range("Heap is empty");
+    }
 
-  return heapArray[0];
+    return heapArray[0];
 }

@@ -3,6 +3,6 @@ enum PackageState {
     NOT_POSTED,
     SCHEDULED,
     STORED,
-    REMOVED_FOR_TRANSPORT,              
+    REMOVED_FOR_TRANSPORT,
     DELIVERED,
 };

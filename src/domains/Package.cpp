@@ -2,44 +2,61 @@
 
 //* O estado inicial sempre é NOT_POSTED, pois o pacote ainda não foi postado
 Package::Package(int ID, int initialOrigin, int finalDestination, int postDate)
-    : ID(ID), initialOrigin(initialOrigin), finalDestination(finalDestination),
-      postDate(postDate), timeStored(0), timeInTransit(0),
+    : ID(ID), initialOrigin(initialOrigin), finalDestination(finalDestination), postDate(postDate), timeStored(0), timeInTransit(0),
       state(PackageState::NOT_POSTED) {}
 
-int Package::getId() const noexcept { return this->ID; }
+int Package::getId() const noexcept {
+    return this->ID;
+}
 
-int Package::getInitialOrigin() const noexcept { return this->initialOrigin; }
+int Package::getInitialOrigin() const noexcept {
+    return this->initialOrigin;
+}
 
 int Package::getFinalDestination() const noexcept {
-  return this->finalDestination;
+    return this->finalDestination;
 }
 
-int Package::getPostDate() const noexcept { return this->postDate; }
+int Package::getPostDate() const noexcept {
+    return this->postDate;
+}
 
-int Package::getTimeStored() const noexcept { return this->timeStored; }
+int Package::getTimeStored() const noexcept {
+    return this->timeStored;
+}
 
-int Package::getTimeInTransit() const noexcept { return this->timeInTransit; }
+int Package::getTimeInTransit() const noexcept {
+    return this->timeInTransit;
+}
 
 int Package::getCurrentLocation() const noexcept {
-  return this->currentLocation;
+    return this->currentLocation;
 }
 
-PackageState Package::getState() const noexcept { return this->state; }
+PackageState Package::getState() const noexcept {
+    return this->state;
+}
 
-LinkedList Package::getRoute() const noexcept { return this->route; }
+LinkedList Package::getRoute() const noexcept {
+    return this->route;
+}
 
-void Package::setTimeInTransit(int time) { this->timeInTransit = time; }
+void Package::setTimeInTransit(int time) {
+    this->timeInTransit = time;
+}
 
 void Package::setCurrentLocation(int location) {
-  this->currentLocation = location;
+    this->currentLocation = location;
 }
 
-void Package::setTimeStored(int time) { this->timeStored = time; }
+void Package::setTimeStored(int time) {
+    this->timeStored = time;
+}
 
-void Package::setRoute(const LinkedList &newRoute) noexcept {
-  this->route = newRoute;
+void Package::setRoute(const LinkedList& newRoute) noexcept {
+    this->route = newRoute;
 }
 
 void Package::setState(PackageState newState) noexcept {
-  this->state = newState;
+    this->state = newState;
 }
