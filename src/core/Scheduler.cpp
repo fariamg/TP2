@@ -5,6 +5,15 @@ Scheduler::Scheduler(int maxEvents, const IO::ConfigData& configData) : eventsHe
     this->transportLatency = configData.transportLatency;
     this->transportInterval = configData.transportInterval;
     this->removalCost = configData.removalCost;
+
+    //TODO: MELHORAR ESSA MODULARIZAÇÃO (RESPONSABILIDADE ÚNICA)
+    for (int i = 0; i < configData.numPackages; ++i) {
+        Package* package = configData.packages[i];
+        if (package != nullptr) {
+            Event* event = new Event(package->getPostTime(), package);
+            this->addEvent(event);
+        }
+    }
 }
 
 int Scheduler::getTotalEvents() const noexcept {

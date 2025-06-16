@@ -18,7 +18,7 @@ class Package {
     int initialOrigin, finalDestination;
 
     //@ Atributo que guarda a data de postagem do pacote
-    int postDate;
+    int postTime;
 
     //@ Atributos que guardam o tempo que o pacote foi armazenado, o tempo em
     //@ trânsito e o tempo esperado de armazenamento
@@ -37,17 +37,11 @@ class Package {
   public:
     //@ Construtor padrão
     //@ @param ID ID único do pacote
-    Package(int ID, int initialOrigin, int finalDestination, int postDate);
+    Package(int ID, int initialOrigin, int finalDestination, int postTime);
 
     //@ Função que retorna o ID do pacote
     int getId() const noexcept;
-
-    //@ Função que retorna o remetente do pacote
-    // std::string getSender() const noexcept;
-
-    //@ Função que retorna o destinatário do pacote'
-    // std::string getRecipient() const noexcept;
-
+    
     //@ Função que retorna o tipo do pacote
     std::string getType() const noexcept;
 
@@ -58,7 +52,7 @@ class Package {
     int getFinalDestination() const noexcept;
 
     //@ Função que retorna a data de postagem do pacote
-    int getPostDate() const noexcept;
+    int getPostTime() const noexcept;
 
     //@ Função que retorna o tempo armazenado do pacote
     int getTimeStored() const noexcept;
