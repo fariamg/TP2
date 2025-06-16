@@ -1,7 +1,6 @@
 #pragma once
 
 #include "dataStructures/LinkedList.h"
-#include "domains/Warehouse.h"
 #include "enums/PackageState.h"
 #include <string>
 
@@ -26,7 +25,6 @@ private:
   int timeStored, timeInTransit;
 
   //@ Atributo que guarda a localização atual do pacote (começa como o armazém
-  //de
   //@ origem)
   int currentLocation;
 

@@ -2,6 +2,10 @@
 
 #include "dataStructures/Stack.h"
 
+//* Forward declarations
+class Package;
+class Stack;
+
 //@ Classe que implementa o domínio armazem
 class Warehouse {
 private:

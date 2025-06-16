@@ -8,11 +8,6 @@ Package::Package(int ID, int initialOrigin, int finalDestination, int postDate)
 
 int Package::getId() const noexcept { return this->ID; }
 
-// std::string Package::getSender() const noexcept { return this->sender; }
-
-// std::string Package::getRecipient() const noexcept { return this->recipient;
-// }
-
 int Package::getInitialOrigin() const noexcept { return this->initialOrigin; }
 
 int Package::getFinalDestination() const noexcept {
