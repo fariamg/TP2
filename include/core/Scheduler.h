@@ -36,7 +36,7 @@ public:
   Event *getNextEvent();
 
   //@ Função que remove o próximo evento da fila de prioridade
-  void *removeNextEvent();
+  void removeNextEvent();
 
   //@ Função que avança o relogio da simulação
   //@ @param timeToAdd Tempo a ser adicinado no timer da simulação
