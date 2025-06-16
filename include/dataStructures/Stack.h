@@ -1,6 +1,9 @@
 #pragma once
 
-#include "domains/Package.h"
+#include "../include/domains/Package.h"
+
+//* Forward declaration da classe Package
+class Package;
 
 // @ Classe que representa uma pilha de pacotes armazenada no Warehouse
 class Stack {
@@ -13,7 +16,7 @@ private:
     //@ Ponteiro para o próximo nó na pilha
     Node *next;
   };
-  
+
   //@ Armazena o tamanho atual da pilha
   int currentSize;
 
@@ -21,7 +24,8 @@ private:
   Node *top;
 
 public:
-//TODO: ADICIONAR CAPACIDADE MAXIMA DE ARMAZENAMENTO NO CONSTRUTOR DA PILHA (PONTO EXTRA)
+  // TODO: ADICIONAR CAPACIDADE MAXIMA DE ARMAZENAMENTO NO CONSTRUTOR DA PILHA
+  // (PONTO EXTRA)
   //@ Construtor e destrutor
   Stack();
   ~Stack();
@@ -43,8 +47,8 @@ public:
   void push(const Package *package);
 
   //@ Função que remove e retorna o pacote do topo da pilha
-  const Package* pop();
+  const Package *pop();
 
   //@ Função que retorna o pacote do topo da pilha sem removê-lo
-  const Package* peek() const;
+  const Package *peek() const;
 };
