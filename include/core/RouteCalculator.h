@@ -2,8 +2,7 @@
 
 #include "dataStructures/Graph.h"
 #include "domains/Warehouse.h"
-// TODO: usar DIJKSTRA para levar em consideração o peso entre as arestas (ponto
-// extra)
+// TODO: usar DIJKSTRA para levar em consideração o peso entre as arestas (ponto  extra)
 //@ Função livre que calcula a rota ótima entre dois armazéns
 
 namespace Routing {

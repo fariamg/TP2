@@ -17,5 +17,6 @@ struct ConfigData {
     Package** packages;
 };
 
+//@ Função que lê as configurações gerais do arquivo de entrada
 ConfigData loadInput(const std::string& filePath);
 }; // namespace IO
