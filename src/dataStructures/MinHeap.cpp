@@ -58,29 +58,25 @@ void MinHeap::insert(Event *event) {
     throw std::overflow_error("Heap is full");
   }
 
-  int index = currentSize - 1;
-  heapArray[index] = event;
+  heapArray[currentSize] = event;
 
-  heapifyUp(index);
+  heapifyUp(currentSize);
 
   currentSize++;
 }
 
-void *MinHeap::extractMin() {
+void MinHeap::extractMin() {
   if (isEmpty()) {
     throw std::out_of_range("Heap is empty");
   }
 
   if (currentSize == 1) {
     currentSize--;
-    return heapArray[0];
+  } else {
+    heapArray[0] = heapArray[currentSize - 1];
+    currentSize--;
+    heapifyDown(0);
   }
-
-  Event *minEvent = heapArray[0];
-  heapArray[0] = heapArray[currentSize - 1];
-  currentSize--;
-
-  heapifyDown(0);
 }
 
 Event *MinHeap::peekMin() const {

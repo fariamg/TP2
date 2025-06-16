@@ -26,7 +26,7 @@ private:
   //@ Função auxiliar para trocar dois eventos no heap
   //@ @param a Primeiro evento a ser trocado
   //@ @param b Segundo evento a ser trocado
-  void swap(Event *&a, Event *&b) {};
+  void swap(Event *&a, Event *&b);
 
 public:
   //@ Construtor e destrutor
@@ -39,7 +39,7 @@ public:
   void insert(Event *event);
 
   //@Função de extração do menor evento do heap
-  void *extractMin();
+  void extractMin();
 
   //@ Função para espiar o menor evento do heap sem removê-lo
   Event *peekMin() const;
