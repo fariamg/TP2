@@ -1,2 +1,2 @@
 //@ Enum que define os tipos de eventos possíveis
-enum EventType { PACKAGE_ARRIVAL, TRANSPORT };
+enum EventType { STORAGE, REMOVAL, TRANSPORT, RESTORAGE, DELIVERY };
