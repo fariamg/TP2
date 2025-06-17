@@ -38,8 +38,8 @@ class MinHeap {
     //@ @param event Ponteiro para o evento a ser inserido
     void insert(Event* event);
 
-    //@Função de extração do menor evento do heap
-    void extractMin();
+    //@ Função de extração do menor evento do heap
+    Event* extractMin();
 
     //@ Função que retorna o tamanho atual do heap
     int getCurrentSize() const noexcept;
@@ -47,6 +47,12 @@ class MinHeap {
     //@ Função para espiar o menor evento do heap sem removê-lo
     Event* peekMin() const;
 
+  
+    Event* peekMax() const;
+
     //@ Função que retorna um booleno indicando se o heap está cheio
     bool isEmpty() const noexcept;
+
+    //@ Função que imprime o heap (para debug)
+    void printHeap() noexcept;
 };

@@ -1,4 +1,5 @@
 #include "../include/dataStructures/MinHeap.h"
+#include <iostream>
 #include <stdexcept>
 
 MinHeap::MinHeap(int capacity) : capacity(capacity), currentSize(0) {
@@ -79,18 +80,22 @@ void MinHeap::insert(Event* event) {
     currentSize++;
 }
 
-void MinHeap::extractMin() {
+Event* MinHeap::extractMin() {
     if (isEmpty()) {
         throw std::out_of_range("Heap is empty");
     }
 
+    Event* minEvent = heapArray[0];
     if (currentSize == 1) {
         currentSize--;
+        return minEvent;
     } else {
         heapArray[0] = heapArray[currentSize - 1];
         currentSize--;
         heapifyDown(0);
+        return minEvent;
     }
+    return nullptr;
 }
 
 Event* MinHeap::peekMin() const {
@@ -99,4 +104,31 @@ Event* MinHeap::peekMin() const {
     }
 
     return heapArray[0];
+}
+
+Event* MinHeap::peekMax() const {
+    if (isEmpty()) {
+        throw std::out_of_range("Heap is empty");
+    }
+
+    Event* maxEvent = heapArray[0];
+    for (int i = 1; i < currentSize; ++i) {
+        if (*maxEvent < *heapArray[i]) {
+            maxEvent = heapArray[i];
+        }
+    }
+    return maxEvent;
+}
+
+void MinHeap::printHeap() noexcept {
+    while (!isEmpty()) {
+        Event* event = extractMin();
+        std::cout << "Event Type: " << event->type << ", Time: " << event->time;
+        if (event->type == STORAGE || event->type == REMOVAL) {
+            std::cout << ", Package ID: " << event->package->getId() << ", Time stored: " << event->package->getTimeStored() << ", Current Location: " << event->package->getCurrentLocation();
+        } else {
+            std::cout << ", Origin Warehouse ID: " << event->originWarehouseId << ", Destination Warehouse ID: " << event->destinationWarehouseId;
+        }
+        std::cout << std::endl;
+    }
 }
