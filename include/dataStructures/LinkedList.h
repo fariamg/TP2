@@ -29,8 +29,14 @@ class LinkedList {
     //@ Construtor
     LinkedList();
 
+    //@ Construtor de cópia
+    LinkedList(const LinkedList& other);
+
     //@ Destrutor
     ~LinkedList();
+
+    //@ Sobrecarga do operador de atribuição
+    LinkedList& operator=(const LinkedList& other);
 
     //@ Função que retorna o tamanho atual da lista
     int getCurrentSize() const noexcept;
@@ -49,4 +55,10 @@ class LinkedList {
 
     //@ Função que retorna o dado do primeiro nó sem removê-lo
     int peekFront() const;
+
+    //@ Função que retorna um dado em uma posição específica da lista
+    int getDataAt(int position) const;
+
+    //@ Função que copia os dados de outra lista ligada
+    void copy(const LinkedList& other);
 };

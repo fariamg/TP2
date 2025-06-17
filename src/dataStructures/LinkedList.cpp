@@ -6,10 +6,36 @@ LinkedList::LinkedList() {
     this->currentSize = 0;
 }
 
+LinkedList::LinkedList(const LinkedList& other) : head(nullptr), tail(nullptr), currentSize(0) {
+    Node* temp = other.head;
+    while (temp != nullptr) {
+        addBack(temp->data);
+        temp = temp->next;
+    }
+}
+
 LinkedList::~LinkedList() {
     while (!isEmpty()) {
         removeFront();
     }
+}
+
+LinkedList& LinkedList::operator=(const LinkedList& other) {
+    if (this == &other) {
+        return *this;
+    }
+
+    while (!isEmpty()) {
+        removeFront();
+    }
+
+    Node* temp = other.head;
+    while (temp != nullptr) {
+        addBack(temp->data);
+        temp = temp->next;
+    }
+
+    return *this;
 }
 
 int LinkedList::getCurrentSize() const noexcept {
@@ -53,7 +79,9 @@ void LinkedList::removeFront() {
 
     Node* nodeToDelete = this->head;
     this->head = this->head->next;
+
     delete nodeToDelete;
+
     this->currentSize--;
 
     if (isEmpty()) {
@@ -66,4 +94,18 @@ int LinkedList::peekFront() const {
         throw std::out_of_range("Nao e possivel espiar uma lista vazia.");
     }
     return this->head->data;
+}
+
+void LinkedList::copy(const LinkedList& other) {
+    if (this != &other) {
+        while (!isEmpty()) {
+            removeFront();
+        }
+
+        Node* current = other.head;
+        while (current != nullptr) {
+            addBack(current->data);
+            current = current->next;
+        }
+    }
 }
