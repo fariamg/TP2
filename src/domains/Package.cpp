@@ -36,7 +36,7 @@ PackageState Package::getState() const noexcept {
     return this->state;
 }
 
-LinkedList Package::getRoute() const noexcept {
+LinkedList& Package::getRoute() noexcept {
     return this->route;
 }
 
@@ -52,8 +52,8 @@ void Package::setTimeStored(int time) {
     this->timeStored = time;
 }
 
-void Package::setRoute(const LinkedList& newRoute) noexcept {
-    this->route = newRoute;
+void Package::setRoute(LinkedList&& newRoute) noexcept {
+    this->route = std::move(newRoute);
 }
 
 void Package::setState(PackageState newState) noexcept {

@@ -41,7 +41,7 @@ class Package {
 
     //@ Função que retorna o ID do pacote
     int getId() const noexcept;
-    
+
     //@ Função que retorna o tipo do pacote
     std::string getType() const noexcept;
 
@@ -67,7 +67,7 @@ class Package {
     PackageState getState() const noexcept;
 
     //@ Função que retorna a rota ótima entre armazéns para o pacote
-    LinkedList getRoute() const noexcept;
+    LinkedList& getRoute() noexcept;
 
     //@ Função que seta o tempo que o pacote ficou em trânsito
     //@ @param time Tempo que o pacote ficou em trânsito
@@ -82,7 +82,7 @@ class Package {
     void setTimeStored(int time);
 
     //@ Função que seta a melhor rota entre armazéns para o pacote
-    void setRoute(const LinkedList& newRoute) noexcept;
+    void setRoute(LinkedList&& newRoute) noexcept;
 
     //@ Função que seta o estado do pacote
     void setState(PackageState newState) noexcept;
