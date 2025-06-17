@@ -21,9 +21,10 @@ bool Stack::isEmpty() const noexcept {
 }
 
 void Stack::push(const Package* package) {
-    Node* newNode = new Node;
+    Node* newNode = new Node();
     newNode->package = package;
-    top->next = top;
+
+    newNode->next = top;
     top = newNode;
 
     currentSize++;
