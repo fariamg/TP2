@@ -3,6 +3,7 @@
 #include <string>
 
 // #include "../include/core/Simulation.h" //TODO: IMPLEMENTAR O SIMULATION
+#include "../include/core/Scheduler.h"
 #include "../include/io/InputLoader.h"
 
 int main(int argc, char* argv[]) {
@@ -18,31 +19,43 @@ int main(int argc, char* argv[]) {
 
         IO::ConfigData data = IO::loadInput(inputFilename);
 
+        // INSTANCIA DO ESCALONADOR
+        std::cout << "Iniciando o escalonador" << std::endl;
+        Scheduler scheduler(data);
+
         // TESTE DE INPUTS
-        std::cout << "Capacidade de transporte: " << data.transportCapacity << std::endl;
-        std::cout << "Latencia de transporte: " << data.transportLatency << std::endl;
-        std::cout << "Intervalo de transporte: " << data.transportInterval << std::endl;
-        std::cout << "Custo de remocao: " << data.removalCost << std::endl;
-        std::cout << "Numero de armazens: " << data.numWarehouses << std::endl;
-        std::cout << "Numero de pacotes: " << data.numPackages << std::endl;
-        for (int i = 0; i < data.numWarehouses; ++i) {
-            std::cout << "Armazem " << i << ": ID = " << data.warehouses[i]->getId() << std::endl;
-        }
+        // std::cout << "Capacidade de transporte: " << data.transportCapacity << std::endl;
+        // std::cout << "Latencia de transporte: " << data.transportLatency << std::endl;
+        // std::cout << "Intervalo de transporte: " << data.transportInterval << std::endl;
+        // std::cout << "Custo de remocao: " << data.removalCost << std::endl;
+        // std::cout << "Numero de armazens: " << data.numWarehouses << std::endl;
+        // std::cout << "Numero de pacotes: " << data.numPackages << std::endl;
 
-        for (int i = 0; i < data.numPackages; ++i) {
-            std::cout << "Pacote " << i << ": ID = " << data.packages[i]->getId() << ", Origem = " << data.packages[i]->getInitialOrigin() << ", Destino = " << data.packages[i]->getFinalDestination()
-                      << std::endl;
-        }
+        // PRINTA OS ARMAZÉNS E PACOTES
+        // std::cout << "Armazens:" << std::endl;
+        // for (int i = 0; i < data.numWarehouses; ++i) {
+        //     std::cout << "Armazem " << i << ": ID = " << data.warehouses[i]->getId() << std::endl;
+        // }
 
-        // MOSTRA AS CONEXÕES ENTRE OS ARMAZÉNS
-        std::cout << "Conexoes entre armazens:" << std::endl;
-        for (int i = 0; i < data.numWarehouses; ++i) {
-            for (int j = 0; j < data.numWarehouses; ++j) {
-                if (data.graph->hasEdge(i, j)) {
-                    std::cout << "Armazem " << i << " -> Armazem " << j << " com capacidade de transporte: " << std::endl;
-                }
-            }
-        }
+        // std::cout << "Pacotes:" << std::endl;
+        // for (int i = 0; i < data.numPackages; ++i) {
+        //     std::cout << "Pacote " << i << ": ID = " << data.packages[i]->getId() << ", Origem = " << data.packages[i]->getInitialOrigin() << ", Destino = " << data.packages[i]->getFinalDestination()
+        //               << std::endl;
+        // }
+
+        //  //PRINTA OS EVENTOS NO HEAP DE FORMA DE PRIORIDADE
+        // std::cout << "Eventos no heap de prioridade:" << std::endl;
+        // scheduler.printEvents();
+
+        // // MOSTRA AS CONEXÕES ENTRE OS ARMAZÉNS
+        // std::cout << "Conexoes entre armazens:" << std::endl;
+        // for (int i = 0; i < data.numWarehouses; ++i) {
+        //     for (int j = 0; j < data.numWarehouses; ++j) {
+        //         if (data.graph->hasEdge(i, j)) {
+        //             std::cout << "Armazem " << i << " -> Armazem " << j << " com capacidade de transporte: " << std::endl;
+        //         }
+        //     }
+        // }
 
         // Simulation sim(data);
 
