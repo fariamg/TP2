@@ -18,6 +18,23 @@ class Scheduler {
     //@ Atributos que guardam as configurações gerais do sistema
     int transportCapacity, transportLatency, transportInterval, removalCost;
 
+    int activePackages;
+
+    //@ Função auxiliar que inicializa os eventos de transporte no grafo
+    //@ @param graph Grafo que representa os armazéns e suas conexões
+    //@ @param numWarehouses Número total de armazéns no sistema
+    void initializeTransportEvents(Graph* graph, int numWarehouses);
+
+    //@ FUnção que processa um evento de chegada de pacote
+    //@ @param event Evento a ser processado
+    //@ @param warehouses Array de armazéns do sistema
+    void handlePackageArrival(Event* event, Warehouse** warehouses);
+
+    //@ Função que processa um evento de transporte
+    //@ @param event Evento a ser processado
+    //@ @param warehouses Array de armazéns do sistema
+    void handleTransportDeparture(Event* event, Warehouse** warehouses);
+
   public:
     // TODO: ver se faz sentido essa limite de eventos
     //@ Construtor que inicializa o escalonador
@@ -25,6 +42,11 @@ class Scheduler {
     //@ @param configData Dados de configuração do sistema
     Scheduler(const IO::ConfigData& configData, int maxEvents = MAX_EVENTS);
 
+    //@ Destrutor que libera os recursos alocados
+    ~Scheduler();
+
+    void runSimulation(Warehouse** warehouses, Graph* graph, int numWarehouses);
+    
     //@ Função que retorna o próximo evento a ser executado
     Event* getNextEvent();
 
@@ -50,7 +72,9 @@ class Scheduler {
 
     void printEvents();
 
-    void updatePreviousStorageTime(Package** packages, int lastIndex, int maxTime);
+    // void updatePreviousStorageTime(Package** packages, int lastIndex, int maxTime);
 
-    void initialStoragesInWarehouse(Warehouse** warehouses) noexcept;
+    // void initialStoragesInWarehouse(Warehouse** warehouses) noexcept;
+
+    // void initializeTransportEvents(Warehouse** warehouses, int numPackages) noexcept;
 };
