@@ -42,11 +42,13 @@ class Warehouse {
     //@ Retorna o ID do armazém
     int getId() const noexcept;
 
+    int getSectionSize(int sectionId) const noexcept;
+
     //@ Armazena um pacote na seção correta (operação principal)
-    void storePackage(const Package* pkg, int destinationId);
+    void storePackage(Package* pkg, int destinationId);
 
     //@ Recupera (remove) um pacote da seção de um destino (operação principal)
-    const Package* retrievePackage(int destinationId);
+    Package* retrievePackage(int destinationId);
 
     //@ Espia o pacote no topo de uma seção sem removê-lo
     const Package* peekAtSection(int destinationId) const;

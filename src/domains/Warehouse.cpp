@@ -16,13 +16,20 @@ int Warehouse::getId() const noexcept {
     return this->ID;
 }
 
-void Warehouse::storePackage(const Package* pkg, int destinationId) {
+int Warehouse::getSectionSize(int sectionId) const noexcept {
+    if (sectionId >= 0 && sectionId < this->totalWarehouses) {
+        return this->sessions[sectionId].stack.getCurrentSize();
+    }
+    return 0; // Retorna 0 se a seção não existir
+}
+
+void Warehouse::storePackage(Package* pkg, int destinationId) {
     if (destinationId >= 0 && destinationId < this->totalWarehouses) {
         this->sessions[destinationId].stack.push(pkg);
     }
 }
 
-const Package* Warehouse::retrievePackage(int destinationId) {
+Package* Warehouse::retrievePackage(int destinationId) {
     if (destinationId >= 0 && destinationId < this->totalWarehouses) {
         return this->sessions[destinationId].stack.pop();
     }
