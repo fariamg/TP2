@@ -25,3 +25,8 @@ void OutputLogger::logPackageRemoved(int time, int pkgId, int whId, int sectionI
     printFormattedTime(time);
     std::cout << " pacote " << std::setw(3) << pkgId << " removido de " << std::setw(3) << whId << " na secao " << std::setw(3) << sectionId << std::endl;
 }
+
+void OutputLogger::logPackageRestored(int time, int pkgId, int whId, int sectionId) {
+    printFormattedTime(time);
+    std::cout << " pacote " << std::setw(3) << pkgId << " rearmazenado em " << std::setw(3) << whId << " na secao " << std::setw(3) << sectionId << std::endl;
+}

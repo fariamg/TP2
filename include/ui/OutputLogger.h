@@ -11,6 +11,7 @@ class OutputLogger {
     static void logPackageInTransit(int time, int pkgId, int originId, int destId);
     static void logPackageDelivered(int time, int pkgId, int whId);
     static void logPackageRemoved(int time, int pkgId, int whId, int sectionId);
+    static void logPackageRestored(int time, int pkgId, int whId, int sectionId);
 
   private:
     static void printFormattedTime(int time);

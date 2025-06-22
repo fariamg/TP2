@@ -19,4 +19,7 @@ struct ConfigData {
 
 //@ Função que lê as configurações gerais do arquivo de entrada
 ConfigData loadInput(const std::string& filePath);
+
+//@ Função que libera a memória alocada para os dados de configuração
+void cleanup(ConfigData& data);
 }; // namespace IO

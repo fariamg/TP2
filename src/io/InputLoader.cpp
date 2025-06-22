@@ -58,7 +58,7 @@ static void readPackageData(std::ifstream& file, ConfigData& data) {
 
     for (int i = 0; i < data.numPackages; ++i) {
         int postTime, id, origin, destination;
-        file >> postTime >> trash >> id >> trash >> origin >> trash >> destination;
+        file >> postTime >> trash >> trash >> trash >> origin >> trash >> destination;
         if (file.fail()) {
             throw std::runtime_error("Erro ao ler dados do pacote " + std::to_string(i));
         }
@@ -66,7 +66,7 @@ static void readPackageData(std::ifstream& file, ConfigData& data) {
             throw std::runtime_error("Origem ou destino invalido para o pacote " + std::to_string(id));
         }
 
-        data.packages[i] = new Package(id, origin, destination, postTime);
+        data.packages[i] = new Package(i, origin, destination, postTime);
 
         data.packages[i]->setRoute(Routing::calculateOptimalRoute(origin, destination, *data.graph));
     }
@@ -93,4 +93,22 @@ ConfigData loadInput(const std::string& filename) {
     return data;
 }
 
+void cleanup(ConfigData& data) {
+    if (data.graph) {
+        delete data.graph;
+    }
+    if (data.warehouses) {
+        for (int i = 0; i < data.numWarehouses; ++i) {
+            delete data.warehouses[i];
+        }
+        delete[] data.warehouses;
+    }
+    if (data.packages) {
+        for (int i = 0; i < data.numPackages; ++i) {
+            delete data.packages[i];
+        }
+        delete[] data.packages;
+    }
+    data = ConfigData(); // Reseta a estrutura para evitar dangling pointers.
+}
 } // namespace IO

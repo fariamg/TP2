@@ -14,7 +14,7 @@ class Timer {
     int getTime() const noexcept;
 
     //@ Função que define o tempo atual do timer
-    void setTime(int newTime) noexcept;
+    void setTime(int newTime);
 
     //@ Função que adiciona tempo ao timer
     //@ @param time Tempo a ser adicionado

@@ -7,7 +7,7 @@ int Timer::getTime() const noexcept {
     return time;
 }
 
-void Timer::setTime(int newTime) noexcept {
+void Timer::setTime(int newTime) {
     if (newTime < 0) {
         throw std::invalid_argument("Time cannot be negative");
     }
