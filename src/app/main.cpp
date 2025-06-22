@@ -2,71 +2,48 @@
 #include <stdexcept>
 #include <string>
 
-// #include "../include/core/Simulation.h" //TODO: IMPLEMENTAR O SIMULATION
+#include "../include/core/RouteCalculator.h"
 #include "../include/core/Scheduler.h"
 #include "../include/io/InputLoader.h"
 
+// Garanta que você tenha essa função de limpeza no seu InputLoader.cpp
+namespace IO {
+void cleanup(ConfigData& data);
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cerr << "Erro: Arquivo de entrada nao especificado." << std::endl;
-        std::cerr << "Uso: " << argv[0] << " <caminho_para_o_arquivo_de_entrada>" << std::endl;
+        std::cerr << "Uso: " << argv[0] << " <arquivo_de_entrada>" << std::endl;
         return 1;
     }
 
     std::string inputFilename = argv[1];
+    IO::ConfigData data = {}; // Inicializa a struct
 
     try {
+        // ETAPA 1: Carrega todos os dados do arquivo.
+        data = IO::loadInput(inputFilename);
 
-        IO::ConfigData data = IO::loadInput(inputFilename);
+        // ETAPA 2: CALCULAR AS ROTAS (ESTE PASSO É OBRIGATÓRIO)
+        for (int i = 0; i < data.numPackages; ++i) {
+            Package* pkg = data.packages[i];
+            if (pkg) {
+                LinkedList route = Routing::calculateOptimalRoute(pkg->getInitialOrigin(), pkg->getFinalDestination(), *data.graph);
+                pkg->setRoute(std::move(route));
+            }
+        }
 
-        // INSTANCIA DO ESCALONADOR
-        std::cout << "Iniciando o escalonador" << std::endl;
+        // ETAPA 3: Cria e executa a simulação.
         Scheduler scheduler(data);
-
-        // TESTE DE INPUTS
-        // std::cout << "Capacidade de transporte: " << data.transportCapacity << std::endl;
-        // std::cout << "Latencia de transporte: " << data.transportLatency << std::endl;
-        // std::cout << "Intervalo de transporte: " << data.transportInterval << std::endl;
-        // std::cout << "Custo de remocao: " << data.removalCost << std::endl;
-        // std::cout << "Numero de armazens: " << data.numWarehouses << std::endl;
-        // std::cout << "Numero de pacotes: " << data.numPackages << std::endl;
-
-        // PRINTA OS ARMAZÉNS E PACOTES
-        // std::cout << "Armazens:" << std::endl;
-        // for (int i = 0; i < data.numWarehouses; ++i) {
-        //     std::cout << "Armazem " << i << ": ID = " << data.warehouses[i]->getId() << std::endl;
-        // }
-
-        // std::cout << "Pacotes:" << std::endl;
-        // for (int i = 0; i < data.numPackages; ++i) {
-        //     std::cout << "Pacote " << i << ": ID = " << data.packages[i]->getId() << ", Origem = " << data.packages[i]->getInitialOrigin() << ", Destino = " << data.packages[i]->getFinalDestination()
-        //               << std::endl;
-        // }
-
-        //  //PRINTA OS EVENTOS NO HEAP DE FORMA DE PRIORIDADE
-        // std::cout << "Eventos no heap de prioridade:" << std::endl;
-        // scheduler.printEvents();
-
-        // // MOSTRA AS CONEXÕES ENTRE OS ARMAZÉNS
-        // std::cout << "Conexoes entre armazens:" << std::endl;
-        // for (int i = 0; i < data.numWarehouses; ++i) {
-        //     for (int j = 0; j < data.numWarehouses; ++j) {
-        //         if (data.graph->hasEdge(i, j)) {
-        //             std::cout << "Armazem " << i << " -> Armazem " << j << " com capacidade de transporte: " << std::endl;
-        //         }
-        //     }
-        // }
-
-        // Simulation sim(data);
-
-        // sim.setupInitialEvents();
-
-        // sim.run();
+        scheduler.runSimulation(data.warehouses, data.graph, data.numWarehouses);
 
     } catch (const std::exception& e) {
-        std::cerr << "Ocorreu um erro durante a execucao: " << e.what() << std::endl;
+        std::cerr << "Ocorreu um erro fatal: " << e.what() << std::endl;
+        IO::cleanup(data); // Garante a limpeza mesmo em caso de erro.
         return 1;
     }
 
+    // ETAPA 4: Limpeza da memória.
+    IO::cleanup(data);
     return 0;
 }

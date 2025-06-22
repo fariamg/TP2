@@ -18,7 +18,7 @@ class Event {
 
     //@ Atributos que definem os armazéns de origem e destino do evento
     //@ Esses atributos são usados para eventos de transporte
-    int originWarehouseId, destinationWarehouseId;
+    int originWarehouseId, destinationSectionId;
 
     //@ Construtor para eventos de chegada de pacotes
     //@ @param time Duração do evento
@@ -29,7 +29,7 @@ class Event {
     //@ @param time Duração do evento
     //@ @param originWarehouseId ID do armazém de origem
     //@ @param destinationWarehouseId ID do armazém de destino
-    Event(int time, int originWarehouseId, int destinationWarehouseId);
+    Event(int time, int originWarehouseId, int destinationSectionId);
 
     //@ Sobrecarga de operador de comparação
     //@ Essencial para funcionamento do MinHeap
