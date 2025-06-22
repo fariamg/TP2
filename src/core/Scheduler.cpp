@@ -1,16 +1,34 @@
 #include "../../include/core/Scheduler.h"
-#include "../../include/ui/OutputLogger.h"
-#include <algorithm> // Necessário para std::min
+#include "../include/domains/Warehouse.h"
+#include <algorithm>
 #include <iostream>
 #include <stdexcept>
 
-// O construtor, destrutor e outras funções permanecem os mesmos.
-// ... (seu construtor, destrutor, runSimulation, etc.)
+//@ Declarações das funções de log definidas no main.cpp
+extern void logPackageStored(int time, int pkgId, int whId, int sectionId);
+extern void logPackageInTransit(int time, int pkgId, int originId, int destId);
+extern void logPackageDelivered(int time, int pkgId, int whId);
+extern void logPackageRemoved(int time, int pkgId, int whId, int sectionId);
+extern void logPackageRestored(int time, int pkgId, int whId, int sectionId);
 
-Scheduler::Scheduler(const IO::ConfigData& configData, int maxEvents) : eventsHeap(maxEvents), timer() {
+//@ Estrutura ConfigData definida no main.cpp
+struct ConfigData {
+    int transportCapacity;
+    int transportLatency;
+    int transportInterval;
+    int removalCost;
+    int numWarehouses;
+    int numPackages;
+    Graph* graph;
+    Warehouse** warehouses;
+    Package** packages;
+};
+
+Scheduler::Scheduler(const ConfigData& configData, int maxEvents) : eventsHeap(maxEvents), timer() {
     if (configData.packages == nullptr || configData.warehouses == nullptr || configData.graph == nullptr) {
         throw std::invalid_argument("Dados de configuração inválidos foram passados para o Scheduler.");
     }
+    //* Inicializa os atributos do Scheduler com os dados de configuração
     this->transportCapacity = configData.transportCapacity;
     this->transportLatency = configData.transportLatency;
     this->transportInterval = configData.transportInterval;
@@ -18,6 +36,7 @@ Scheduler::Scheduler(const IO::ConfigData& configData, int maxEvents) : eventsHe
 
     this->activePackages = configData.numPackages;
 
+    //* Insere os eventos de chegada de pacotes no heap de eventos
     for (int i = 0; i < configData.numPackages; ++i) {
         Package* package = configData.packages[i];
         if (package != nullptr) {
@@ -27,6 +46,7 @@ Scheduler::Scheduler(const IO::ConfigData& configData, int maxEvents) : eventsHe
 }
 
 Scheduler::~Scheduler() {
+    //* Enwquanto houver eventos no heap, remove e deleta cada evento
     while (!this->eventsHeap.isEmpty()) {
         Event* ev = this->eventsHeap.extractMin();
         if (ev)
@@ -39,15 +59,22 @@ void Scheduler::runSimulation(Warehouse** warehouses, Graph* graph, int numWareh
         initializeTransportEvents(graph, numWarehouses);
     }
 
+    //* Enquanto houver eventos no heap, processa cada evento
     while (!this->eventsHeap.isEmpty()) {
         Event* event = this->removeNextEvent();
         if (event == nullptr)
             continue;
 
+        //* Se o tempo do evento for menor que o tempo atual do timer, ignora o evento
+        //* Isso garante que os eventos sejam processados na ordem correta
+        //* e evita que eventos com tempos passados sejam processados novamente
         if (event->time < this->timer.getTime())
-            continue; // Ignora eventos passados
+            continue;
 
+        //* Avança o timer para o tempo do evento atual
         this->timer.setTime(event->time);
+
+        //* Dependendo do tipo de evento, chama a função apropriada para processá-lo
         switch (event->type) {
         case EventType::PACKAGE_ARRIVAL:
             handlePackageArrival(event, warehouses);
@@ -58,20 +85,22 @@ void Scheduler::runSimulation(Warehouse** warehouses, Graph* graph, int numWareh
         default:
             break;
         }
+
+        //* Deleta o evento após processá-lo
         delete event;
     }
 }
 
 void Scheduler::initializeTransportEvents(Graph* graph, int numWarehouses) {
-    // Para simplificar e garantir o primeiro transporte, vamos encontrar o tempo do primeiro pacote
-    // e agendar o transporte inicial a partir dali, como no código de referência.
-    // Se não houver pacotes, nenhum evento de transporte será criado aqui.
     if (this->eventsHeap.isEmpty())
         return;
 
+    //* Inicializa os eventos de transporte com base no grafo e no tempo do primeiro pacote
+    //* O tempo do primeiro pacote é usado como base para calcular o tempo inicial de transporte
     double firstPackageTime = this->eventsHeap.peekMin()->time;
     double initialTransportTime = firstPackageTime + this->transportInterval;
 
+    //* Insere eventos de transporte para cada par de armazéns conectados no grafo
     for (int i = 0; i < numWarehouses; ++i) {
         for (int j = 0; j < numWarehouses; ++j) {
             if (graph->hasEdge(i, j)) {
@@ -82,81 +111,86 @@ void Scheduler::initializeTransportEvents(Graph* graph, int numWarehouses) {
 }
 
 void Scheduler::handlePackageArrival(Event* event, Warehouse** warehouses) {
+    //* Verifica se o evento é válido e se o pacote está presente
     Package* package = event->package;
     if (!package)
         return;
     int currentWarehouseId = package->getRoute().peekFront();
 
+    //* Se a rota do pacote so tem um armazém, significa que o pacote chegou ao destino final
     if (package->getRoute().getCurrentSize() == 1) {
+        //* Se o pacote chegou ao destino final, atualiza o estado para DELIVERED
         package->setState(PackageState::DELIVERED);
-        OutputLogger::logPackageDelivered(timer.getTime(), package->getId(), currentWarehouseId);
+        logPackageDelivered(timer.getTime(), package->getId(), currentWarehouseId);
         this->activePackages--;
     } else {
+        //* Se o pacote ainda tem armazéns na rota, remove o armazém atual da rota
+        //* e armazena o pacote no próximo armazém da rota
         package->getRoute().removeFront();
         int nextWarehouseId = package->getRoute().peekFront();
         warehouses[currentWarehouseId]->storePackage(package, nextWarehouseId);
         package->setCurrentLocation(currentWarehouseId);
         package->setState(PackageState::STORED);
-        OutputLogger::logPackageStored(timer.getTime(), package->getId(), currentWarehouseId, nextWarehouseId);
+        logPackageStored(timer.getTime(), package->getId(), currentWarehouseId, nextWarehouseId);
     }
 }
 
-// =================================================================================
-// FUNÇÃO CORRIGIDA E FINAL: handleTransportDeparture
-// =================================================================================
 void Scheduler::handleTransportDeparture(Event* event, Warehouse** warehouses) {
+    //* Verifica se o evento é válido e se os armazéns de origem e destino estão presentes
     int originId = event->originWarehouseId;
     int sectionId = event->destinationSectionId;
     Warehouse* originWarehouse = warehouses[originId];
 
-    // 1. Agenda o próximo transporte para esta rota, se ainda houver pacotes ativos.
+    //* Se ainda houver pacotes ativos, insere um novo evento de transporte no heap
     if (this->activePackages > 0) {
         int nextTransportTime = event->time + this->transportInterval;
         this->eventsHeap.insert(new Event(nextTransportTime, originId, sectionId));
     }
 
+    //* Se a seção do armazém de origem estiver vazia, não há pacotes para transportar
     if (originWarehouse->isSectionEmpty(sectionId)) {
-        return; // Nada a fazer se a seção já está vazia.
+        return;
     }
 
-    // 2. Remove todos os pacotes da seção (LIFO) e armazena-os temporariamente.
+    //* Recupera os pacotes da seção do armazém de origem usando uma pilha LIFO
+    //* Isso garante que os pacotes sejam removidos na ordem inversa em que foram armazenados
+    int originWarehouseSize = originWarehouse->getSectionSize(sectionId);
     int numPackagesInSection = originWarehouse->getSectionSize(sectionId);
     Package** lifoBuffer = new Package*[numPackagesInSection];
     for (int i = 0; i < numPackagesInSection; ++i) {
         lifoBuffer[i] = originWarehouse->retrievePackage(sectionId);
     }
 
-    // 3. Loga a remoção de cada pacote com seu custo de tempo individual.
+    //* Registra o tempo de remoção dos pacotes
     double lastRemovalTime = event->time;
+    //* Registra a remoção de cada pacote da seção do armazém de origem
     for (int i = 0; i < numPackagesInSection; i++) {
         lastRemovalTime += this->removalCost;
-        OutputLogger::logPackageRemoved(lastRemovalTime, lifoBuffer[i]->getId(), originId, sectionId);
+        logPackageRemoved(lastRemovalTime, lifoBuffer[i]->getId(), originId, sectionId);
     }
 
-    // 4. Determina quais pacotes serão transportados e quais serão re-armazenados.
-    // A lógica é LIFO: os últimos a serem removidos (topo da pilha) são os primeiros a serem transportados.
+    //* Calcula quantos pacotes serão transportados e quantos serão restaurados
     int numToTransport = std::min(numPackagesInSection, this->transportCapacity);
     int numToRestore = numPackagesInSection - numToTransport;
 
-    // 5. Loga o trânsito e agenda a chegada dos pacotes transportados.
-    // O loop vai dos pacotes que foram removidos por último para os primeiros.
+    //* Registra os pacotes que estão sendo transportados e restaura os pacotes restantes
     for (int i = numPackagesInSection - 1; i >= numToRestore; --i) {
         Package* package = lifoBuffer[i];
-        OutputLogger::logPackageInTransit(lastRemovalTime, package->getId(), originId, sectionId);
+        logPackageInTransit(lastRemovalTime, package->getId(), originId, sectionId);
 
         int arrivalTime = lastRemovalTime + this->transportLatency;
         this->eventsHeap.insert(new Event(arrivalTime, package));
     }
 
-    // 6. Re-armazena os pacotes restantes na ordem inversa da remoção.
-    // O loop vai dos pacotes que foram removidos primeiro até o limite dos que não foram transportados.
+    //* Restaura os pacotes restantes na seção do armazém de origem
+    //* Isso garante que os pacotes que não foram transportados ainda estejam disponíveis
     for (int i = numToRestore - 1; i >= 0; --i) {
         Package* package = lifoBuffer[i];
         originWarehouse->storePackage(package, sectionId);
-        OutputLogger::logPackageRestored(lastRemovalTime, package->getId(), originId, sectionId);
+        logPackageRestored(lastRemovalTime, package->getId(), originId, sectionId);
     }
 
-    // 7. Libera a memória alocada para o buffer.
+    //* Libera a memória alocada para o buffer LIFO
     delete[] lifoBuffer;
 }
 
@@ -166,4 +200,24 @@ Event* Scheduler::getNextEvent() {
 
 Event* Scheduler::removeNextEvent() {
     return this->eventsHeap.extractMin();
+}
+
+Timer::Timer() : time(0) {}
+
+int Timer::getTime() const noexcept {
+    return time;
+}
+
+void Timer::setTime(int newTime) {
+    if (newTime < 0) {
+        throw std::invalid_argument("Time cannot be negative");
+    }
+    time = newTime;
+}
+
+void Timer::addTime(int time) {
+    if (time < 0) {
+        throw std::invalid_argument("Time cannot be negative");
+    }
+    this->time += time;
 }

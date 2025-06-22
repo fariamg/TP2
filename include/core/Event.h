@@ -1,7 +1,9 @@
 #pragma once
 
 #include "domains/Package.h"
-#include "enums/EventType.h"
+
+//@ Enumeração que define os tipos de eventos na simulação
+enum EventType { PACKAGE_ARRIVAL, LEAVE_TRANSPORT };
 
 //@ Classe que implementa um evento da simulação
 class Event {

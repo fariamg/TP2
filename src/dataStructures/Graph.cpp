@@ -1,4 +1,5 @@
 #include "../include/dataStructures/Graph.h"
+#include "../include/domains/Warehouse.h"
 #include <stdexcept>
 
 Graph::Graph(int numWarehouses) : numWarehouses(numWarehouses) {

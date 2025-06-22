@@ -1,10 +1,36 @@
 #pragma once
 
-#include "../include/io/InputLoader.h"
-#include "dataStructures/MinHeap.h"
-#include "utils/Timer.h"
+#include "../dataStructures/Graph.h"
+#include "../dataStructures/MinHeap.h"
 
+//@ Forward declaration das classes usadas
+class Warehouse;
+struct ConfigData;
+
+//@ Classe que implementa um timer para controlar o tempo da simulação
+class Timer {
+  private:
+    //@ Atributos que guardam inicio e fim
+    int time;
+
+  public:
+    //@ Contrutor padrão
+    Timer();
+
+    //@ Função que retorna o tempo atual acumulado
+    int getTime() const noexcept;
+
+    //@ Função que define o tempo atual do timer
+    void setTime(int newTime);
+
+    //@ Função que adiciona tempo ao timer
+    //@ @param time Tempo a ser adicionado
+    void addTime(int time);
+};
+
+//* Constante que define a capacidade máxima de eventos no escalonador
 static constexpr size_t MAX_EVENTS = 1000;
+
 
 //@ Classe que implementa o escalonador de eventos
 class Scheduler {
@@ -18,6 +44,7 @@ class Scheduler {
     //@ Atributos que guardam as configurações gerais do sistema
     int transportCapacity, transportLatency, transportInterval, removalCost;
 
+    //@ Atributo que guarda o número de pacotes ativos no sistema
     int activePackages;
 
     //@ Função auxiliar que inicializa os eventos de transporte no grafo
@@ -36,17 +63,20 @@ class Scheduler {
     void handleTransportDeparture(Event* event, Warehouse** warehouses);
 
   public:
-    // TODO: ver se faz sentido essa limite de eventos
     //@ Construtor que inicializa o escalonador
     // @param maxEvents Capacidade máxima de eventos no escalonador
     //@ @param configData Dados de configuração do sistema
-    Scheduler(const IO::ConfigData& configData, int maxEvents = MAX_EVENTS);
+    Scheduler(const ConfigData& configData, int maxEvents = MAX_EVENTS);
 
     //@ Destrutor que libera os recursos alocados
     ~Scheduler();
 
+    //@ Função que inicia a simulação
+    //@ @param warehouses Array de armazéns do sistema
+    //@ @param graph Grafo que representa os armazéns e suas conexões
+    //@ @param numWarehouses Número total de armazéns no sistema
     void runSimulation(Warehouse** warehouses, Graph* graph, int numWarehouses);
-    
+
     //@ Função que retorna o próximo evento a ser executado
     Event* getNextEvent();
 
@@ -69,12 +99,5 @@ class Scheduler {
 
     //@ Função que verifica se ainda há eventos a serem processados
     bool isEmpty() const noexcept;
-
-    void printEvents();
-
-    // void updatePreviousStorageTime(Package** packages, int lastIndex, int maxTime);
-
-    // void initialStoragesInWarehouse(Warehouse** warehouses) noexcept;
-
-    // void initializeTransportEvents(Warehouse** warehouses, int numPackages) noexcept;
 };
+

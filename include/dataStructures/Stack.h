@@ -2,7 +2,7 @@
 
 #include "../include/domains/Package.h"
 
-//* Forward declaration da classe Package
+//@ Forward declaration da classe Package
 class Package;
 
 // @ Classe que representa uma pilha de pacotes armazenada no Warehouse
@@ -42,9 +42,6 @@ class Stack {
     //@ Função que verifica se a pilha está vazia
     bool isEmpty() const noexcept;
 
-    //@ Função que verifica se a pilha está cheia
-    // bool isFull() const noexcept;
-
     //@ Função que adiciona um pacote à pilha
     //@ @param package Ponteiro para o pacote a ser adicionado
     void push(Package* package);
@@ -55,5 +52,8 @@ class Stack {
     //@ Função que retorna o pacote do topo da pilha sem removê-lo
     const Package* peek() const;
 
+    //@ Função que retorna o pacote em uma posição específica da pilha
+    //@ @param index Índice do pacote a ser retornado
+    //@ @return Ponteiro para o pacote na posição especificada, ou nullptr se o índice
     Package* peek(int index) const;
 };

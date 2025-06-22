@@ -23,7 +23,6 @@ class Warehouse {
 
     //@ Pilhas de pacotes do armazém (escolha de array pois o acesso se torna mais
     // rapido)
-    //! Sei que o máximo de pilhas vai ser o máximo de armazens no sistema
     Session* sessions;
 
     //@ Total de armazens no sistema
@@ -32,8 +31,6 @@ class Warehouse {
   public:
     //@ Construtor
     //@ @param ID Identificador único do armazém
-    // TODO: PASSAR AQUI A CAPACIDADE DO ARMAZEM QUE PASSA PARA O CONSTRUTOR DA
-    // PILHA INTERNO ( PONTO EXTRA)
     Warehouse(int ID, int totalWarehouses);
 
     //@ Destrutor

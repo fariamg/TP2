@@ -1,7 +1,6 @@
 #pragma once
 
-#include "domains/Warehouse.h"
-
+#include "dataStructures/LinkedList.h"
 //@ Classe que implementa o grafo para representar os armazéns e suas conexões
 class Graph {
   private:

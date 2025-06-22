@@ -1,1 +1,0 @@
-enum EventType { PACKAGE_ARRIVAL, LEAVE_TRANSPORT };

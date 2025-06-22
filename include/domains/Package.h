@@ -1,18 +1,24 @@
 #pragma once
 
 #include "dataStructures/LinkedList.h"
-#include "enums/PackageState.h"
+#include "dataStructures/Graph.h"
 #include <string>
 
+class Graph;
+
+//@ Enum que define os estados possíveis de um pacote
+enum PackageState {
+    NOT_POSTED,
+    SCHEDULED,
+    STORED,
+    REMOVED_FOR_TRANSPORT,
+    DELIVERED,
+};
 //@ Classe que representa um pacote
 class Package {
   private:
-    // TODO: type vai ser de um tipo específic
     //@ Atributo que guarda o ID único do pacote
     int ID;
-
-    //@ Atributos que guardam o remetente, destinatário e tipo do pacote
-    // std::string sender, recipient;
 
     //@ Atributos que guardam o armazém de origem e destino do pacote
     int initialOrigin, finalDestination;
@@ -87,3 +93,13 @@ class Package {
     //@ Função que seta o estado do pacote
     void setState(PackageState newState) noexcept;
 };
+
+
+namespace Routing {
+
+//@ Função que calcula a rota ótima entre dois armazéns
+//@ @param originID ID do armazém de origem
+//@ @param destinationID ID do armazém de destino
+//@ @param graph Grafo que representa os armazéns e suas conexões
+LinkedList calculateOptimalRoute(int origninID, int destinationID, const Graph& graph);
+} // namespace Routing
