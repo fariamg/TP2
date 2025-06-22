@@ -8,40 +8,50 @@ SRCDIR = src
 OBJDIR = obj
 BINDIR = bin
 
-# Executable name
-EXECUTABLE = $(BINDIR)/tp2.out
+# Executables
+MAIN_EXECUTABLE = $(BINDIR)/tp2.out
+ANALYSIS_EXECUTABLE = $(BINDIR)/analysis.out
 
-# Find all .cpp files recursively in SRCDIR
-# This will find files like src/app/main.cpp, src/utils/IO.cpp, etc.
-SOURCES = $(shell find $(SRCDIR) -name '*.cpp')
+# Find all .cpp files recursively in SRCDIR, excluding analysis/ExperimentRunner.cpp
+MAIN_SOURCES = $(shell find $(SRCDIR) -name '*.cpp' ! -path '$(SRCDIR)/analysis/ExperimentRunner.cpp')
+ANALYSIS_SOURCES = $(shell find $(SRCDIR) -name '*.cpp' ! -path '$(SRCDIR)/app/main.cpp')
 
-# Generate .o file names from .cpp file names, placing them in OBJDIR,
-# preserving the subdirectory structure from SRCDIR.
-# e.g., src/app/main.cpp -> obj/app/main.o
-OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
+# Generate .o file names from .cpp file names
+MAIN_OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(MAIN_SOURCES))
+ANALYSIS_OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(ANALYSIS_SOURCES))
 
 # Default target: 'all'
-all: $(EXECUTABLE)
+all: $(MAIN_EXECUTABLE) $(ANALYSIS_EXECUTABLE)
 
-# Rule to link the executable
-$(EXECUTABLE): $(OBJECTS)
+# Rule to link the main executable
+$(MAIN_EXECUTABLE): $(MAIN_OBJECTS)
 	@mkdir -p $(BINDIR) 
 	$(CXX) $(LDFLAGS) $^ -o $@
-	@echo "Executable $(EXECUTABLE) created successfully."
+	@echo "Executable $(MAIN_EXECUTABLE) created successfully."
+
+# Rule to link the analysis executable
+$(ANALYSIS_EXECUTABLE): $(ANALYSIS_OBJECTS)
+	@mkdir -p $(BINDIR)
+	$(CXX) $(LDFLAGS) $^ -o $@
+	@echo "Analysis executable $(ANALYSIS_EXECUTABLE) created successfully."
 
 # Rule to compile .cpp files to .o files
-# This pattern rule handles all .cpp files found by the SOURCES variable.
-# It creates the necessary subdirectory structure within OBJDIR.
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@) 
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 	@echo "Compiled $< to $@"
 
+# Target to run analysis experiments
+analysis: $(ANALYSIS_EXECUTABLE)
+	@echo "Running experimental analysis..."
+	./$(ANALYSIS_EXECUTABLE)
+	@echo "Analysis complete. Check results/ directory for outputs."
+
 # Clean target: removes obj and bin directories
 clean:
 	@echo "Cleaning up object and binary files..."
-	rm -rf $(OBJDIR) $(BINDIR)
+	rm -rf $(OBJDIR) $(BINDIR) results/
 	@echo "Cleanup complete."
 
 # Phony targets: targets that are not actual files
-.PHONY: all clean
+.PHONY: all clean analysis

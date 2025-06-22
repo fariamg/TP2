@@ -1,28 +1,10 @@
 #include "../../include/core/Scheduler.h"
-#include "../include/domains/Warehouse.h"
+#include "../../include/core/ConfigData.h"
+#include "../../include/domains/Warehouse.h"
+#include "../../include/utils/Logger.h"
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
-
-//@ Declarações das funções de log definidas no main.cpp
-extern void logPackageStored(int time, int pkgId, int whId, int sectionId);
-extern void logPackageInTransit(int time, int pkgId, int originId, int destId);
-extern void logPackageDelivered(int time, int pkgId, int whId);
-extern void logPackageRemoved(int time, int pkgId, int whId, int sectionId);
-extern void logPackageRestored(int time, int pkgId, int whId, int sectionId);
-
-//@ Estrutura ConfigData definida no main.cpp
-struct ConfigData {
-    int transportCapacity;
-    int transportLatency;
-    int transportInterval;
-    int removalCost;
-    int numWarehouses;
-    int numPackages;
-    Graph* graph;
-    Warehouse** warehouses;
-    Package** packages;
-};
 
 Scheduler::Scheduler(const ConfigData& configData, int maxEvents) : eventsHeap(maxEvents), timer() {
     if (configData.packages == nullptr || configData.warehouses == nullptr || configData.graph == nullptr) {
@@ -46,7 +28,7 @@ Scheduler::Scheduler(const ConfigData& configData, int maxEvents) : eventsHeap(m
 }
 
 Scheduler::~Scheduler() {
-    //* Enwquanto houver eventos no heap, remove e deleta cada evento
+    //* Enquanto houver eventos no heap, remove e deleta cada evento
     while (!this->eventsHeap.isEmpty()) {
         Event* ev = this->eventsHeap.extractMin();
         if (ev)
