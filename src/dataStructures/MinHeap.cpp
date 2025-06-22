@@ -1,20 +1,83 @@
-#include "../include/dataStructures/MinHeap.h"
-#include <iostream>
-#include <stdexcept>
+#include "../../include/dataStructures/MinHeap.h"
+#include <iostream>  // Permitido para std::cout
+#include <stdexcept> // Permitido para tratamento de erros robusto
+
+// --- Construtor e Destrutor ---
 
 MinHeap::MinHeap(int capacity) : capacity(capacity), currentSize(0) {
+    if (capacity <= 0) {
+        throw std::invalid_argument("A capacidade do Heap deve ser um número positivo.");
+    }
     heapArray = new Event*[capacity];
 }
 
-//! Deleta apenas a memoria do array de ponteiros, não os eventos
-//! (responsabilidade unica)
 MinHeap::~MinHeap() {
     delete[] heapArray;
+}
+
+// --- Funções Públicas ---
+
+void MinHeap::insert(Event* event) {
+    if (currentSize >= capacity) {
+        throw std::overflow_error("O Heap está cheio. Não é possível inserir.");
+    }
+
+    // Ordem correta das operações:
+    // 1. Atribui o novo evento.
+    heapArray[currentSize] = event;
+    // 2. Incrementa o tamanho.
+    currentSize++;
+    // 3. Corrige a posição do novo elemento.
+    heapifyUp(currentSize - 1);
+}
+
+Event* MinHeap::extractMin() {
+    if (isEmpty()) {
+        throw std::out_of_range("O Heap está vazio.");
+    }
+
+    // Lógica correta e simplificada:
+    Event* minEvent = heapArray[0];
+    heapArray[0] = heapArray[currentSize - 1];
+    currentSize--;
+
+    if (!isEmpty()) {
+        heapifyDown(0);
+    }
+    
+    return minEvent;
+}
+
+Event* MinHeap::peekMin() const {
+    if (isEmpty()) {
+        throw std::out_of_range("O Heap está vazio.");
+    }
+    return heapArray[0];
+}
+
+Event* MinHeap::peekMax() const {
+    if (isEmpty()) {
+        throw std::out_of_range("O Heap está vazio.");
+    }
+    
+    Event* maxEvent = heapArray[0];
+    for (int i = 1; i < currentSize; ++i) {
+        if (*maxEvent < *heapArray[i]) {
+            maxEvent = heapArray[i];
+        }
+    }
+    return maxEvent;
 }
 
 int MinHeap::getCurrentSize() const noexcept {
     return currentSize;
 }
+
+bool MinHeap::isEmpty() const noexcept {
+    return currentSize == 0;
+}
+
+// --- Funções Privadas Auxiliares ---
 
 void MinHeap::heapifyUp(int index) {
     while (index > 0 && *heapArray[index] < *heapArray[parent(index)]) {
@@ -31,7 +94,6 @@ void MinHeap::heapifyDown(int index) {
     if (left < currentSize && *heapArray[left] < *heapArray[smallest]) {
         smallest = left;
     }
-
     if (right < currentSize && *heapArray[right] < *heapArray[smallest]) {
         smallest = right;
     }
@@ -55,80 +117,38 @@ int MinHeap::rightChild(int index) const noexcept {
 }
 
 void MinHeap::swap(Event*& a, Event*& b) {
-    if (a == nullptr || b == nullptr) {
-        throw std::invalid_argument("Cannot swap null pointers");
-    }
-
+    // ALTERAÇÃO: Usando a implementação manual de swap conforme solicitado.
     Event* temp = a;
     a = b;
     b = temp;
 }
 
-bool MinHeap::isEmpty() const noexcept {
-    return currentSize == 0;
-}
+// --- Função de Impressão para Debug ---
 
-void MinHeap::insert(Event* event) {
-    if (currentSize >= capacity) {
-        throw std::overflow_error("Heap is full");
-    }
+// Função de impressão não-destrutiva e segura.
+// Não é noexcept porque a impressão pode (teoricamente) falhar e lançar exceções.
+// É const porque não modifica o estado do heap.
+void MinHeap::printHeap() const {
+    std::cout << "--- Conteudo do Heap (Tamanho: " << currentSize << ") ---" << std::endl;
+    for (int i = 0; i < currentSize; ++i) {
+        Event* event = heapArray[i];
+        if (event == nullptr) continue;
 
-    heapArray[currentSize] = event;
-
-    heapifyUp(currentSize);
-
-    currentSize++;
-}
-
-Event* MinHeap::extractMin() {
-    if (isEmpty()) {
-        throw std::out_of_range("Heap is empty");
-    }
-
-    Event* minEvent = heapArray[0];
-    if (currentSize == 1) {
-        currentSize--;
-        return minEvent;
-    } else {
-        heapArray[0] = heapArray[currentSize - 1];
-        currentSize--;
-        heapifyDown(0);
-        return minEvent;
-    }
-    return nullptr;
-}
-
-Event* MinHeap::peekMin() const {
-    if (isEmpty()) {
-        throw std::out_of_range("Heap is empty");
-    }
-
-    return heapArray[0];
-}
-
-Event* MinHeap::peekMax() const {
-    if (isEmpty()) {
-        throw std::out_of_range("Heap is empty");
-    }
-
-    Event* maxEvent = heapArray[0];
-    for (int i = 1; i < currentSize; ++i) {
-        if (*maxEvent < *heapArray[i]) {
-            maxEvent = heapArray[i];
-        }
-    }
-    return maxEvent;
-}
-
-void MinHeap::printHeap() noexcept {
-    while (!isEmpty()) {
-        Event* event = extractMin();
-        std::cout << "Event Type: " << event->type << ", Time: " << event->time;
-        if (event->type == STORAGE || event->type == REMOVAL) {
-            std::cout << ", Package ID: " << event->package->getId() << ", Time stored: " << event->package->getTimeStored() << ", Current Location: " << event->package->getCurrentLocation();
-        } else {
-            std::cout << ", Origin Warehouse ID: " << event->originWarehouseId << ", Destination Warehouse ID: " << event->destinationWarehouseId;
+        std::cout << "Indice " << i << ": ";
+        
+        // Usa os tipos de evento corretos do Event.h corrigido
+        if (event->type == EventType::PACKAGE_ARRIVAL) {
+            // Checa se o pacote não é nulo antes de acessá-lo.
+            if (event->package) {
+                std::cout << "PACKAGE_ARRIVAL, Tempo: " << event->time 
+                          << ", PkgID: " << event->package->getId();
+            }
+        } else if (event->type == EventType::LEAVE_TRANSPORT) {
+            std::cout << "LEAVE_TRANSPORT, Tempo: " << event->time
+                      << ", De: " << event->originWarehouseId 
+                      << ", Para Secao: " << event->destinationSectionId;
         }
         std::cout << std::endl;
     }
+    std::cout << "------------------------------------------------" << std::endl;
 }

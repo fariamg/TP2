@@ -11,7 +11,7 @@ class Stack {
     //@ Struct de implemtação de um nó
     struct Node {
         //@ Ponteiro para o pacote armazenado no nó
-        const Package* package;
+        Package* package;
 
         //@ Ponteiro para o próximo nó na pilha
         Node* next;
@@ -30,6 +30,9 @@ class Stack {
     Stack();
     ~Stack();
 
+    //@ Construtor de cópia
+    Stack(const Stack& other);
+
     //@ Função que retorna a capacidade da pilha
     int getCapacity() const noexcept;
 
@@ -44,11 +47,13 @@ class Stack {
 
     //@ Função que adiciona um pacote à pilha
     //@ @param package Ponteiro para o pacote a ser adicionado
-    void push(const Package* package);
+    void push(Package* package);
 
     //@ Função que remove e retorna o pacote do topo da pilha
-    const Package* pop();
+    Package* pop();
 
     //@ Função que retorna o pacote do topo da pilha sem removê-lo
     const Package* peek() const;
+
+    Package* peek(int index) const;
 };

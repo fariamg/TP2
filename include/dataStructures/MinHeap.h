@@ -54,5 +54,5 @@ class MinHeap {
     bool isEmpty() const noexcept;
 
     //@ Função que imprime o heap (para debug)
-    void printHeap() noexcept;
+    void printHeap() const;;
 };
