@@ -109,3 +109,24 @@ void LinkedList::copy(const LinkedList& other) {
         }
     }
 }
+
+void LinkedList::removeBack() {
+    if (isEmpty()) {
+        return;
+    }
+
+    if (head == tail) {
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+    } else {
+        Node* current = head;
+        while (current->next != tail) {
+            current = current->next;
+        }
+        delete tail;
+        tail = current;
+        tail->next = nullptr;
+    }
+    currentSize--;
+}

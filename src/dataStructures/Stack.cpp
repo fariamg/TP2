@@ -1,103 +1,93 @@
-#include "../include/dataStructures/Stack.h"
+#include "../../include/dataStructures/Stack.h"
 #include <stdexcept>
+
 
 Stack::Stack() : currentSize(0), top(nullptr) {}
 
 Stack::~Stack() {
-    while (top != nullptr) {
+    while (!isEmpty()) {
         Node* nodeToDelete = top;
         top = top->next;
-
         delete nodeToDelete;
     }
 }
 
-Stack::Stack(const Stack& other) : top(nullptr), currentSize(0) {
+Stack::Stack(const Stack& other) : currentSize(0), top(nullptr) {
     // Se a outra pilha (a original) estiver vazia, não há nada a fazer.
     // A nova pilha já foi inicializada como vazia.
     if (other.isEmpty()) {
         return;
     }
 
-    // 1. Copia o primeiro nó (o topo da pilha original).
-    // Alocamos um nó completamente novo para a nossa pilha.
-    this->top = new Node();
-    this->top->package = other.top->package; // Copiamos o ponteiro do pacote.
-    this->currentSize = 1;
+    // Constrói uma pilha temporária para manter a ordem dos elementos.
+    Stack tempStack;
 
-    // 2. Prepara os ponteiros para percorrer as duas listas em paralelo.
-    Node* otherCurrent = other.top->next; // Ponteiro para percorrer a pilha original.
-    Node* thisCurrent = this->top;        // Ponteiro para construir a nova pilha.
-
-    // 3. Percorre o resto da pilha original, criando novos nós e copiando os dados.
-    while (otherCurrent != nullptr) {
-        // Cria um novo nó e o anexa ao final da nossa nova lista.
-        thisCurrent->next = new Node();
-        thisCurrent = thisCurrent->next; // Avança para o novo nó recém-criado.
-
-        // Copia o ponteiro do pacote do nó original para o novo nó.
-        thisCurrent->package = otherCurrent->package;
-
-        // Avança para o próximo nó na pilha original.
-        otherCurrent = otherCurrent->next;
-        this->currentSize++;
+    // Transfere todos os elementos da pilha original para a pilha temporária.
+    Node* current = other.top;
+    while (current != nullptr) {
+        tempStack.push(current->package);
+        current = current->next;
     }
 
-    // Garante que o final da nossa nova lista aponte para nullptr.
-    thisCurrent->next = nullptr;
+    // Transfere os elementos da pilha temporária para esta pilha.
+    // Como as pilhas são LIFO, fazer isso duas vezes mantém a ordem original.
+    while (!tempStack.isEmpty()) {
+        this->push(tempStack.pop());
+    }
+}
+
+int Stack::getCapacity() const noexcept {
+    // For now, return unlimited capacity
+    // This could be modified to implement limited capacity (extra points)
+    return -1; // -1 indicates unlimited capacity
 }
 
 int Stack::getCurrentSize() const noexcept {
-    return this->currentSize;
+    return currentSize;
 }
 
 bool Stack::isEmpty() const noexcept {
-    return this->top == nullptr;
+    return top == nullptr;
 }
 
 void Stack::push(Package* package) {
-    Node* newNode = new Node();
+    Node* newNode = new Node;
     newNode->package = package;
-
     newNode->next = top;
     top = newNode;
-
     currentSize++;
 }
 
 Package* Stack::pop() {
     if (isEmpty()) {
-        throw std::out_of_range("Stack is empty");
+        throw std::out_of_range("Pilha vazia: Não é possível executar pop.");
     }
 
-    Node* temp = top;
-    Package* poppedPackage = top->package;
+    Node* nodeToDelete = top;
+    Package* package = top->package;
     top = top->next;
-
-    delete temp;
-
+    delete nodeToDelete;
     currentSize--;
 
-    return poppedPackage;
+    return package;
 }
 
 const Package* Stack::peek() const {
     if (isEmpty()) {
-        throw std::out_of_range("Stack is empty");
+        throw std::out_of_range("Pilha vazia: Não é possível executar peek.");
     }
-
     return top->package;
 }
 
 Package* Stack::peek(int index) const {
-    if (index < 0 || index >= currentSize) {
-        throw std::out_of_range("Index out of range");
+    if (isEmpty() || index < 0 || index >= currentSize) {
+        return nullptr;
     }
 
-    Node* currentNode = top;
-    for (int i = 0; i < index; ++i) {
-        currentNode = currentNode->next;
+    Node* current = top;
+    for (int i = 0; i < index && current != nullptr; i++) {
+        current = current->next;
     }
 
-    return currentNode->package;
+    return (current != nullptr) ? current->package : nullptr;
 }

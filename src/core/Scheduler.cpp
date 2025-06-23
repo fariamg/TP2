@@ -28,11 +28,10 @@ Scheduler::Scheduler(const ConfigData& configData, int maxEvents) : eventsHeap(m
 }
 
 Scheduler::~Scheduler() {
-    //* Enquanto houver eventos no heap, remove e deleta cada evento
+    //* Limpa todos os eventos restantes no heap
     while (!this->eventsHeap.isEmpty()) {
-        Event* ev = this->eventsHeap.extractMin();
-        if (ev)
-            delete ev;
+        Event* event = this->eventsHeap.extractMin();
+        delete event;
     }
 }
 
@@ -136,7 +135,6 @@ void Scheduler::handleTransportDeparture(Event* event, Warehouse** warehouses) {
 
     //* Recupera os pacotes da seção do armazém de origem usando uma pilha LIFO
     //* Isso garante que os pacotes sejam removidos na ordem inversa em que foram armazenados
-    int originWarehouseSize = originWarehouse->getSectionSize(sectionId);
     int numPackagesInSection = originWarehouse->getSectionSize(sectionId);
     Package** lifoBuffer = new Package*[numPackagesInSection];
     for (int i = 0; i < numPackagesInSection; ++i) {
@@ -187,14 +185,11 @@ Event* Scheduler::removeNextEvent() {
 Timer::Timer() : time(0) {}
 
 int Timer::getTime() const noexcept {
-    return time;
+    return this->time;
 }
 
 void Timer::setTime(int newTime) {
-    if (newTime < 0) {
-        throw std::invalid_argument("Time cannot be negative");
-    }
-    time = newTime;
+    this->time = newTime;
 }
 
 void Timer::addTime(int time) {

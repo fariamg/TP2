@@ -1,6 +1,0 @@
-Input_Size,Execution_Time_MS,Total_Packages,Delivered_Packages,Rearrangements,Transport_Events,Max_Occupancy,Avg_Delivery_Time,Avg_Wait_Time,Throughput,Delivery_Rate,Contention_Rate
-100,2.589,100,100,0,100,0,31.24,0,0.0988142,100,0
-200,5.158,200,200,0,200,0,31.17,0,0.0984252,100,0
-300,7.243,300,300,0,300,0,31.1333,0,0.099272,100,0
-400,10.003,400,400,0,400,0,31.08,0,0.0997009,100,0
-500,27.529,500,500,0,500,0,31.084,0,0.0993641,100,0

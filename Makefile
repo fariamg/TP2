@@ -1,57 +1,119 @@
-# Compiler and flags
 CXX = g++
-CXXFLAGS = -g -o -Wall -Wextra -std=c++17 -Iinclude
-LDFLAGS =
-
-# Directories
+CXXFLAGS = -std=c++17 -Wall -Wextra -O2
+INCLUDES = -Iinclude
 SRCDIR = src
 OBJDIR = obj
 BINDIR = bin
 
-# Executables
-MAIN_EXECUTABLE = $(BINDIR)/tp2.out
-ANALYSIS_EXECUTABLE = $(BINDIR)/analysis.out
+# Source files for base implementation (excluding experiment runners and config generator main)
+BASE_SOURCES = $(wildcard $(SRCDIR)/core/*.cpp) \
+               $(wildcard $(SRCDIR)/dataStructures/*.cpp) \
+               $(wildcard $(SRCDIR)/domains/*.cpp) \
+               $(SRCDIR)/utils/Logger.cpp \
+               $(SRCDIR)/utils/LoggerExtended.cpp \
+               $(SRCDIR)/analysis/ConfigGenerator.cpp \
+               $(SRCDIR)/analysis/SimulationMetrics.cpp
 
-# Find all .cpp files recursively in SRCDIR, excluding analysis/ExperimentRunner.cpp
-MAIN_SOURCES = $(shell find $(SRCDIR) -name '*.cpp' ! -path '$(SRCDIR)/analysis/ExperimentRunner.cpp')
-ANALYSIS_SOURCES = $(shell find $(SRCDIR) -name '*.cpp' ! -path '$(SRCDIR)/app/main.cpp')
+# Source files for extended implementation  
+EXTENDED_SOURCES = $(SRCDIR)/core/ConfigDataExtended.cpp \
+                   $(SRCDIR)/core/SchedulerExtended.cpp \
+                   $(SRCDIR)/dataStructures/GraphExtended.cpp \
+                   $(SRCDIR)/domains/PackageExtended.cpp \
+                   $(SRCDIR)/domains/WarehouseExtended.cpp \
+                   $(SRCDIR)/utils/LoggerExtended.cpp \
+                   $(SRCDIR)/analysis/ConfigGeneratorExtended.cpp
 
-# Generate .o file names from .cpp file names
-MAIN_OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(MAIN_SOURCES))
-ANALYSIS_OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(ANALYSIS_SOURCES))
+# Object files
+BASE_OBJECTS = $(BASE_SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
+EXTENDED_OBJECTS = $(EXTENDED_SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
-# Default target: 'all'
-all: $(MAIN_EXECUTABLE) $(ANALYSIS_EXECUTABLE)
+# Targets
+MAIN_BASE = $(BINDIR)/simulation_base
+MAIN_EXTENDED = $(BINDIR)/simulation_extended
+EXPERIMENT_BASE = $(BINDIR)/experiment_base
+EXPERIMENT_EXTENDED = $(BINDIR)/experiment_extended
+COMPARISON = $(BINDIR)/comparison
+CONFIG_GENERATOR = $(BINDIR)/config_generator
 
-# Rule to link the main executable
-$(MAIN_EXECUTABLE): $(MAIN_OBJECTS)
-	@mkdir -p $(BINDIR) 
-	$(CXX) $(LDFLAGS) $^ -o $@
-	@echo "Executable $(MAIN_EXECUTABLE) created successfully."
+.PHONY: all clean setup base extended experiments comparison configs
 
-# Rule to link the analysis executable
-$(ANALYSIS_EXECUTABLE): $(ANALYSIS_OBJECTS)
+all: setup base extended experiments comparison
+
+setup:
+	@mkdir -p $(OBJDIR)/core $(OBJDIR)/dataStructures $(OBJDIR)/domains $(OBJDIR)/utils $(OBJDIR)/analysis $(OBJDIR)/app
 	@mkdir -p $(BINDIR)
-	$(CXX) $(LDFLAGS) $^ -o $@
-	@echo "Analysis executable $(ANALYSIS_EXECUTABLE) created successfully."
+	@mkdir -p results configs
 
-# Rule to compile .cpp files to .o files
+# Base implementation
+base: $(MAIN_BASE)
+
+$(MAIN_BASE): $(BASE_OBJECTS) $(OBJDIR)/app/main.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+# Extended implementation
+extended: $(MAIN_EXTENDED)
+
+$(MAIN_EXTENDED): $(BASE_OBJECTS) $(EXTENDED_OBJECTS) $(OBJDIR)/app/mainExtended.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+# Experiments
+experiments: $(EXPERIMENT_BASE) $(EXPERIMENT_EXTENDED)
+
+$(EXPERIMENT_BASE): $(BASE_OBJECTS) $(OBJDIR)/analysis/ExperimentRunner.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+$(EXPERIMENT_EXTENDED): $(BASE_OBJECTS) $(EXTENDED_OBJECTS) $(OBJDIR)/analysis/ExperimentRunnerExtended.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+# Comparison
+comparison: $(COMPARISON)
+
+$(COMPARISON): $(BASE_OBJECTS) $(EXTENDED_OBJECTS) $(OBJDIR)/analysis/ComparisonRunner.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+# Config generator
+config-generator: $(CONFIG_GENERATOR)
+
+$(CONFIG_GENERATOR): $(BASE_OBJECTS) $(OBJDIR)/utils/ConfigGeneratorMain.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+# Pattern rule for object files
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	@mkdir -p $(dir $@) 
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-	@echo "Compiled $< to $@"
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
-# Target to run analysis experiments
-analysis: $(ANALYSIS_EXECUTABLE)
-	@echo "Running experimental analysis..."
-	./$(ANALYSIS_EXECUTABLE)
-	@echo "Analysis complete. Check results/ directory for outputs."
-
-# Clean target: removes obj and bin directories
 clean:
-	@echo "Cleaning up object and binary files..."
-	rm -rf $(OBJDIR) $(BINDIR) results/
-	@echo "Cleanup complete."
+	rm -rf $(OBJDIR) $(BINDIR)
+	rm -rf results configs
 
-# Phony targets: targets that are not actual files
-.PHONY: all clean analysis
+# Configuration generation
+configs: setup config-generator
+	@echo "Gerando arquivos de configuração..."
+	./$(CONFIG_GENERATOR)
+
+test-base: base configs
+	./$(MAIN_BASE) configs/test_config.txt
+
+test-extended: extended configs  
+	./$(MAIN_EXTENDED) configs/test_config_extended.txt
+
+run-experiments: experiments
+	./$(EXPERIMENT_BASE)
+	./$(EXPERIMENT_EXTENDED)
+
+run-comparison: comparison
+	./$(COMPARISON)
+
+help:
+	@echo "Available targets:"
+	@echo "  all         - Build everything (base, extended, experiments, comparison)"
+	@echo "  base        - Build base simulation"
+	@echo "  extended    - Build extended simulation with extra features"
+	@echo "  experiments - Build experiment runners"
+	@echo "  comparison  - Build comparison tool"
+	@echo "  config-generator - Build configuration generator"
+	@echo "  configs     - Generate configuration files"
+	@echo "  test-base   - Run base simulation with test config"
+	@echo "  test-extended - Run extended simulation with test config"
+	@echo "  run-experiments - Run all experiments"
+	@echo "  run-comparison - Run comparison analysis"
+	@echo "  clean       - Remove all built files"

@@ -61,4 +61,6 @@ class LinkedList {
 
     //@ Função que copia os dados de outra lista ligada
     void copy(const LinkedList& other);
+
+    void removeBack(); 
 };
